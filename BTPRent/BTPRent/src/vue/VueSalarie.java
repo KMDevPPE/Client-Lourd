@@ -46,7 +46,7 @@ public class VueSalarie extends JPanel implements ActionListener
 			this.setLayout(null); // les surface
 			
 			JPanel unPanel = new JPanel ();
-			unPanel.setBounds(40, 550, 1200, 120);
+			unPanel.setBounds(40, 550, 1350, 120);
 			unPanel.setLayout(new GridLayout(5, 4));
 			
 			 //premiere case vide
@@ -136,7 +136,7 @@ public class VueSalarie extends JPanel implements ActionListener
 			});
 			
 			JScrollPane uneScroll = new JScrollPane(tableSalaries);
-			uneScroll.setBounds(50, 20, 500, 150);
+			uneScroll.setBounds(50, 20, 1340, 500);
 			this.add(uneScroll);
 			this.setVisible(false);
 		}

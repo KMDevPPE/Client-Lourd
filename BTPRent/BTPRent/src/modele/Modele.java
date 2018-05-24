@@ -6,6 +6,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import controleur.Client;
+import controleur.Particulier;
+import controleur.Entreprise;
 import controleur.Etat;
 import controleur.Salarie;
 
@@ -37,9 +39,10 @@ public class Modele
 		return droits;
 	}
 	
+	/*
 	public static void insertClient (Client unClient) // bien import le client de controleur
 	{
-		String requete = "insert into client (ID_C,MAIL,ADRESSE) values (null, '" + unClient.getNom()+"' , '" + unClient.getAdresse() + "' );";
+		String requete = "insert into client (ID_C, ,ADRESSE) values (null, '" + unClient.getNom()+"' , '" + unClient.getAdresse() + "' );";
 		
 		BDD uneBdd = new BDD("localhost", "BTPRent", "root", "");
 		try
@@ -148,7 +151,7 @@ public class Modele
 		}
 	
 		return leClient;
-	}
+	}*/
 	
 	//---------------------------------------------------------MODELE SALARIE ---------------------------------------------------------
 	
