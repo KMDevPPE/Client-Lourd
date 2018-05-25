@@ -33,7 +33,7 @@ public class Tableau extends AbstractTableModel
 	
 	public void add(Object ligne[])
 	{
-		// cette methode recoit une lgine et l'ajoute à la matrice données 
+		// cette methode recoit une ligne et l'ajoute à la matrice données 
 		Object newTable [][] = new Object [this.donnees.length + 1] [this.entete.length];
 		for (int i = 0; i < this.donnees.length ; i++)
 		{

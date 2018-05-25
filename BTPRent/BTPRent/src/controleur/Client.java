@@ -53,6 +53,14 @@ public class Client {
 		this.mdp = mdp;
 	}
 
+	public Client(int idclient, String nom, String prenom, String mail)
+	{
+		this.idclient = idclient;
+		this.nom = nom;
+		this.prenom = prenom;
+		this.mail = mail;
+	}
+
 	public int getIdclient() {
 		return idclient;
 	}

@@ -26,6 +26,10 @@ public class Particulier extends Client
 		
 	}
 
+	public Particulier(int idclient, String nom, String prenom, String mail) { 
+		super(idclient, nom, prenom, mail);
+	}
+
 	public String getDatenaiss() {
 		return datenaiss;
 	}

@@ -56,5 +56,8 @@ public class Entreprise extends Client
 		this.siret = siret;
 	}
 	
+	public String voidstring() {
+		return "";
+	}
 	
 }

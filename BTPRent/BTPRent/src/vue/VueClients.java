@@ -15,6 +15,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.JCheckBox;
 
 import modele.Modele;
 import modele.ModeleClients;
@@ -29,6 +30,8 @@ public class VueClients extends JPanel implements ActionListener
 	private JButton btSupprimer = new JButton("Supprimer");
 	private JButton btEditer = new JButton("Modifier");
 	
+	private JCheckBox cbParticulier = new JCheckBox("Particulier");
+	private JCheckBox cbEntreprise = new JCheckBox("Entreprise");
 	
 	private JTable tableClients ;
 	private Tableau unTableau ; //modele de tableau pour gerer la JTable
@@ -46,6 +49,7 @@ public class VueClients extends JPanel implements ActionListener
 	private JTextField txtTel = new JTextField();
 	private JTextField txtMail = new JTextField();
 	private JTextField txtMDP = new JTextField();
+	
 		
 	public VueClients()
 	{
@@ -55,7 +59,7 @@ public class VueClients extends JPanel implements ActionListener
 		
 		JPanel unPanel = new JPanel ();
 		unPanel.setBounds(40, 550, 1350, 120);
-		unPanel.setLayout(new GridLayout(7, 4));
+		unPanel.setLayout(new GridLayout(8, 4));
 		
 		 //premiere case vide
 		
@@ -67,24 +71,17 @@ public class VueClients extends JPanel implements ActionListener
 		unPanel.add(this.txtNom);
 		
 		unPanel.add(new JLabel(""));
-		unPanel.add(new JLabel(" Prenom: "));
+		unPanel.add(new JLabel(" Prenom : "));
 		unPanel.add(this.txtPrenom);
 		
 		unPanel.add(new JLabel(" Date Naissance : "));
 		unPanel.add(this.txtDateNaiss);		
- 
-		unPanel.add(new JLabel("")); 
-		unPanel.add(new JLabel(" Raison: "));
-		unPanel.add(this.txtRaison);		 		
-		 
-		unPanel.add(new JLabel(" Domaine : "));
-		unPanel.add(this.txtSiret); 
 		
 		unPanel.add(new JLabel("")); 
 		unPanel.add(new JLabel(" Rue : "));
 		unPanel.add(this.txtRue);
 		
-		unPanel.add(new JLabel(" Ville: "));
+		unPanel.add(new JLabel(" Ville : "));
 		unPanel.add(this.txtVille);
 		
 		unPanel.add(new JLabel("")); 
@@ -99,8 +96,22 @@ public class VueClients extends JPanel implements ActionListener
 		unPanel.add(new JLabel(" Email : "));
 		unPanel.add(this.txtMail); 
 		
-		unPanel.add(new JLabel("Mot de Passe"));
+		unPanel.add(new JLabel(" Mot de Passe :"));
 		unPanel.add(this.txtMDP);
+		
+		unPanel.add(new JLabel("")); 
+		unPanel.add(new JLabel(" Raison : "));
+		unPanel.add(this.txtRaison);		 		
+		 
+		unPanel.add(new JLabel(" Domaine : "));
+		unPanel.add(this.txtDomaine); 
+		
+		unPanel.add(new JLabel(""));
+		unPanel.add(new JLabel(" Siret :"));
+		unPanel.add(this.txtSiret); 
+		
+		unPanel.add(this.cbParticulier);
+		unPanel.add(this.cbEntreprise);
 		
 		unPanel.add(new JLabel(""));
 		unPanel.add(new JLabel(""));
@@ -181,28 +192,52 @@ public class VueClients extends JPanel implements ActionListener
 
 // "ID Client", "Nom", "Prenom", "Date Naiss", "Rue", "Ville", "Code Postal", "Telephone", "Email", "MDP", "Raison", "Domaine", "Siret
 	private Object[][] remplirDonnees() {
+		ArrayList<Particulier> lesParticuliers = ModeleClients.selectAllParticuliers();
+		ArrayList<Entreprise> lesEntreprises = ModeleClients.selectAllEntreprises();
 		ArrayList<Client> lesClients = ModeleClients.selectAllClients();
-		Particulier unParti = new Particulier();
-		Entreprise uneEntre = new Entreprise();
 		Object [][] lesDonnees = new Object[lesClients.size()][13];
 		int i = 0;
 		for (Client unClient : lesClients)
 		{
+			for (Particulier unParticulier : lesParticuliers)
+			{
+				if(unClient.getIdclient() == unParticulier.getIdclient())
+				{
 			lesDonnees[i][0] = unClient.getIdclient() +"";
 			lesDonnees[i][1] = unClient.getNom();
 			lesDonnees[i][2] = unClient.getPrenom();
-			lesDonnees[i][3] = unParti.getDatenaiss();
+			lesDonnees[i][3] = unParticulier.getDatenaiss();			
+			lesDonnees[i][4] = unClient.getRue();
+			lesDonnees[i][5] = unClient.getVille();
+			lesDonnees[i][6] = unClient.getCp();
+			lesDonnees[i][7] = unClient.getTel();
+			lesDonnees[i][8] = unClient.getMail();
+			lesDonnees[i][9] = unClient.getMdp();		
+			System.out.println(unClient.getNom());
+			i++;	
+				}				
+			}
+			for (Entreprise uneEntreprise : lesEntreprises)
+			{
+				if(unClient.getIdclient() == uneEntreprise.getIdclient())
+				{
+			lesDonnees[i][0] = unClient.getIdclient() +"";
+			lesDonnees[i][1] = unClient.getNom();
+			lesDonnees[i][2] = unClient.getPrenom();
+					
 			lesDonnees[i][4] = unClient.getRue();
 			lesDonnees[i][5] = unClient.getVille();
 			lesDonnees[i][6] = unClient.getCp();
 			lesDonnees[i][7] = unClient.getTel();
 			lesDonnees[i][8] = unClient.getMail();
 			lesDonnees[i][9] = unClient.getMdp();
-			lesDonnees[i][10] = uneEntre.getRaison();
-			lesDonnees[i][11] = uneEntre.getDomaine();
-			lesDonnees[i][12] = uneEntre.getSiret();
+			lesDonnees[i][10] = uneEntreprise.getRaison();
+			lesDonnees[i][11] = uneEntreprise.getDomaine();
+			lesDonnees[i][12] = uneEntreprise.getSiret();	
 			System.out.println(unClient.getNom());
-			i++;
+			i++;	
+				}
+			}	
 		}
 		
 		return lesDonnees;
@@ -212,33 +247,114 @@ public class VueClients extends JPanel implements ActionListener
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		switch (e.getActionCommand()) {
-	/*	case "Ajouter":
+		case "Ajouter":
 		{
-			String nom = this.txtNom.getText();
-			String adresse = this.txtAdresse.getText();
-			if (nom.equals("") || adresse.equals(""))
+			boolean particulier = this.cbParticulier.isSelected();
+			boolean entreprise = this.cbEntreprise.isSelected();
+//------------------------------------------------------AJOUT PARTICULIER------------------------------------------------------------------------------------------------
+			if(particulier == true) 
 			{
-				JOptionPane.showMessageDialog(this, "Veuillez remplir les champs");
+				String nom = this.txtNom.getText();
+				String prenom = this.txtPrenom.getText();
+				String datenaiss = this.txtDateNaiss.getText();
+				String rue = this.txtRue.getText(); 
+				String ville = this.txtVille.getText(); 
+				String cp = this.txtCP.getText(); 
+				String tel = this.txtTel.getText();
+				String mail = this.txtMail.getText(); 
+				String mdp = this.txtMDP.getText();
+						
+				if (nom.equals("") || prenom.equals("") || mail.equals("") || mdp.equals("") || datenaiss.equals(""))
+				{
+					JOptionPane.showMessageDialog(this, "Veuillez remplir le ou les champs suivants: Nom, Prenom, Date de Naissance, Mail, Mdp");
+				}
+				else
+				{
+					Particulier unParticulier = new Particulier (nom, prenom, rue, ville, cp, tel, mail, mdp, datenaiss);
+					ModeleClients.insertParticulier(unParticulier);
+					JOptionPane.showMessageDialog(this, "Particulier inséré avec succès");
+					// mise a jour de la Jtable
+					Particulier leParticulier = ModeleClients.selectWhereP(unParticulier);
+					
+					Object ligne [] = {leParticulier.getIdclient(), leParticulier.getNom(), leParticulier.getPrenom(), leParticulier.getDatenaiss(),
+							leParticulier.getRue(), leParticulier.getVille(), leParticulier.getCp(), leParticulier.getTel(), leParticulier.getMail(),
+							leParticulier.getMdp(),"","",""}; 
+					
+					
+					//appel de la methode pour ajouter cette ligne dans la tableau
+					unTableau.add(ligne);
+					
+					this.txtIdclient.setText("");
+					this.txtNom.setText("");
+					this.txtPrenom.setText("");
+					this.txtDateNaiss.setText("");
+					this.txtRue.setText("");
+					this.txtVille.setText("");
+					this.txtCP.setText("");
+					this.txtTel.setText("");
+					this.txtMail.setText("");
+					this.txtMDP.setText(""); 
+					this.txtRaison.setText("");
+					this.txtDomaine.setText("");
+					this.txtSiret.setText("");
+				}
+			}
+//---------------------------------------------------------------------------------AJOUT ENTREPRISE-------------------------------------------------------------
+			else if(entreprise == true)
+			{
+				String nom = this.txtNom.getText();
+				String prenom = this.txtPrenom.getText();
+				String datenaiss = "";
+				String rue = this.txtRue.getText(); 
+				String ville = this.txtVille.getText(); 
+				String cp = this.txtCP.getText(); 
+				String tel = this.txtTel.getText();
+				String mail = this.txtMail.getText(); 
+				String mdp = this.txtMDP.getText();
+				String raison = this.txtRaison.getText();
+				String domaine = this.txtDomaine.getText();
+				String siret = this.txtSiret.getText();
+						
+				if (nom.equals("") || prenom.equals("") || mail.equals("") || mdp.equals("") || raison.equals("") || siret.equals("") )
+				{
+					JOptionPane.showMessageDialog(this, "Veuillez remplir le ou les champs suivants: Nom, Prenom, Mail, Mdp, Raison, Siret");
+				}
+				else
+				{
+					Entreprise uneEntreprise = new Entreprise (nom, prenom, rue, ville, cp, tel, mail, mdp, raison, domaine, siret);
+					ModeleClients.insertEntreprise(uneEntreprise);
+					JOptionPane.showMessageDialog(this, "Entreprise insérée avec succès");
+					// mise a jour de la Jtable
+					Entreprise lEntreprise = ModeleClients.selectWhereE(uneEntreprise);
+					
+					Object ligne [] = {lEntreprise.getIdclient(), lEntreprise.getNom(), lEntreprise.getPrenom(), "", lEntreprise.getRue(), lEntreprise.getVille(), lEntreprise.getCp(), 
+							lEntreprise.getTel(), lEntreprise.getMail(), lEntreprise.getMdp(), lEntreprise.getRaison(), lEntreprise.getDomaine(), lEntreprise.getSiret()}; 
+					
+					
+					//appel de la methode pour ajouter cette ligne dans la tableau
+					unTableau.add(ligne);
+					
+					this.txtIdclient.setText("");
+					this.txtNom.setText("");
+					this.txtPrenom.setText("");
+					
+					this.txtRue.setText("");
+					this.txtVille.setText("");
+					this.txtCP.setText("");
+					this.txtTel.setText("");
+					this.txtMail.setText("");
+					this.txtMDP.setText(""); 
+					this.txtRaison.setText("");
+					this.txtDomaine.setText("");
+					this.txtSiret.setText("");
+				}
 			}
 			else
-			{
-				Client unClient = new Client (nom, adresse);
-				Modele.insertClient(unClient);
-				JOptionPane.showMessageDialog(this, "Client inséré avec succès");
-				// mise a jour de la Jtable
-				Client leClient = Modele.selectWhere(unClient);
-				
-				Object ligne [] = {leClient.getIdclient(), leClient.getNom(), leClient.getAdresse()};
-				
-				
-				//appel de la methode pour ajouter cette ligne dans la tablea
-				unTableau.add(ligne);
-				
-				this.txtAdresse.setText("");
-				this.txtNom.setText("");							
-			}
+				JOptionPane.showMessageDialog(this, "Veuillez cocher le type de votre client : Entreprise ou Particulier ?");
+			
 		}
 			break;
+		/*	
 		case "Supprimer":
 		{			
 			String nom = txtNom.getText();
