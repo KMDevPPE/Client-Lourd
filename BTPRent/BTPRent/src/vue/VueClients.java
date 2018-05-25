@@ -246,6 +246,7 @@ public class VueClients extends JPanel implements ActionListener
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		  ((JCheckBox) e.getSource()).setSelected(false);
 		switch (e.getActionCommand()) {
 		case "Ajouter":
 		{
@@ -253,7 +254,7 @@ public class VueClients extends JPanel implements ActionListener
 			boolean entreprise = this.cbEntreprise.isSelected();
 //------------------------------------------------------AJOUT PARTICULIER------------------------------------------------------------------------------------------------
 			if(particulier == true) 
-			{
+			{				
 				String nom = this.txtNom.getText();
 				String prenom = this.txtPrenom.getText();
 				String datenaiss = this.txtDateNaiss.getText();
@@ -304,7 +305,6 @@ public class VueClients extends JPanel implements ActionListener
 			{
 				String nom = this.txtNom.getText();
 				String prenom = this.txtPrenom.getText();
-				String datenaiss = "";
 				String rue = this.txtRue.getText(); 
 				String ville = this.txtVille.getText(); 
 				String cp = this.txtCP.getText(); 
@@ -336,8 +336,7 @@ public class VueClients extends JPanel implements ActionListener
 					
 					this.txtIdclient.setText("");
 					this.txtNom.setText("");
-					this.txtPrenom.setText("");
-					
+					this.txtPrenom.setText("");					
 					this.txtRue.setText("");
 					this.txtVille.setText("");
 					this.txtCP.setText("");

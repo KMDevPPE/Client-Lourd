@@ -174,8 +174,8 @@ public class ModeleClients
 	
 	
 
+	//-------------------------------SUPPRIMER CLIENT--------------------------
 	
-	/*
 	public static void deleteClient (Client unClient)
 	{
 		String requete = "delete from client where ID_C =" +unClient.getIdclient() +";";
@@ -194,6 +194,43 @@ public class ModeleClients
 		}
 	}
 	
+	public static void deleteEntreprise (Entreprise uneEntreprise)
+	{
+		String requete = "delete from entreprise where ID_C =" +uneEntreprise.getIdclient() +";";
+		BDD uneBdd = new BDD("localhost", "BTPRent", "root", "");
+		try
+		{
+			uneBdd.seConnecter();
+			Statement unStat = uneBdd.getMaConnexion().createStatement();
+			unStat.execute(requete);
+			unStat.close();
+			uneBdd.seDeconnecter();
+		}
+		catch (SQLException exp)
+		{
+			System.out.println("Erreur : " + requete);
+		}
+	}
+	
+	public static void deleteParticulier (Particulier unParticulier)
+	{
+		String requete = "delete from Particulier where ID_C =" +unParticulier.getIdclient() +";";
+		BDD uneBdd = new BDD("localhost", "BTPRent", "root", "");
+		try
+		{
+			uneBdd.seConnecter();
+			Statement unStat = uneBdd.getMaConnexion().createStatement();
+			unStat.execute(requete);
+			unStat.close();
+			uneBdd.seDeconnecter();
+		}
+		catch (SQLException exp)
+		{
+			System.out.println("Erreur : " + requete);
+		}
+	}
+	
+	//-------------------------MODIFIER CLIENT ------------------------------------------
 	public static void updateClient (Client unClient)
 	{
 		String requete = "update client set mail ='" + unClient.getNom() + "',adresse='" +unClient.getAdresse() + "' where ID_C = " + unClient.getIdclient() +";";
@@ -210,7 +247,29 @@ public class ModeleClients
 		{
 			System.out.println("Erreur : " + requete);
 		}
-	} */
+	} 
+	
+	public static void updateParticulier (Particulier unParticulier)
+	{
+		String requete = "update particulier set nom_c ='" + unParticulier.getNom() + "', datenaiss ='" +unParticulier.getDatenaiss() + 
+				"', prenom_c ='" +unParticulier.getPrenom() + "', ville_c ='" +unParticulier.getVille() + "', cp_c ='" +unParticulier.getCp() + 
+				"', rue_c ='" +unParticulier.getRue() + "', telephone ='" +unParticulier.getTel() + "', mail ='" +unParticulier.getMail() + 
+				"', mdp ='" +unParticulier.getMdp() + "' where ID_C = " + unParticulier.getIdclient() +";";
+		BDD uneBdd = new BDD("localhost", "BTPRent", "root", "");
+		try
+		{
+			uneBdd.seConnecter();
+			Statement unStat = uneBdd.getMaConnexion().createStatement();
+			unStat.execute(requete);
+			unStat.close();
+			uneBdd.seDeconnecter();
+		}
+		catch (SQLException exp)
+		{
+			System.out.println("Erreur : " + requete);
+		}
+	} 
+	
 	 //-------------SELECT WHERE--------------------
 	public static Client selectWhere (Client unClient)
 	{
