@@ -249,6 +249,28 @@ public class ModeleClients
 		}
 	} 
 	
+	public static void updateEntreprise (Entreprise uneEntreprise)
+	{
+		String requete = "update entreprise set nom_c ='" + uneEntreprise.getNom() + "', prenom_c ='" +uneEntreprise.getPrenom() + 
+				"', ville_c ='" +uneEntreprise.getVille() + "', cp_c ='" +uneEntreprise.getCp() + 
+				"', rue_c ='" +uneEntreprise.getRue() + "', telephone ='" +uneEntreprise.getTel() + "', mail ='" +uneEntreprise.getMail() + 
+				"', mdp ='" +uneEntreprise.getMdp() + "', raison ='" +uneEntreprise.getRaison() + "', domaine ='" +uneEntreprise.getDomaine() + 
+				"', siret ='" +uneEntreprise.getSiret() + "' where ID_C = " + uneEntreprise.getIdclient() +";";
+		BDD uneBdd = new BDD("localhost", "BTPRent", "root", "");
+		try
+		{
+			uneBdd.seConnecter();
+			Statement unStat = uneBdd.getMaConnexion().createStatement();
+			unStat.execute(requete);
+			unStat.close();
+			uneBdd.seDeconnecter();
+		}
+		catch (SQLException exp)
+		{
+			System.out.println("Erreur : " + requete);
+		}
+	} 
+	
 	public static void updateParticulier (Particulier unParticulier)
 	{
 		String requete = "update particulier set nom_c ='" + unParticulier.getNom() + "', datenaiss ='" +unParticulier.getDatenaiss() + 
