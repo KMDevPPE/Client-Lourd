@@ -18,8 +18,7 @@ public class Particulier extends Client
 		
 	}
 	
-	public Particulier(String nom, String prenom, String rue, String ville, String cp, String tel, String mail, String mdp, 
-			String datenaiss)
+	public Particulier(String nom, String prenom, String rue, String ville, String cp, String tel, String mail, String mdp, String datenaiss)
 	{
 		super (nom, prenom, rue, ville, cp, tel, mail, mdp);
 		this.datenaiss = datenaiss;

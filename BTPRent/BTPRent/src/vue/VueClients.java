@@ -128,6 +128,9 @@ public class VueClients extends JPanel implements ActionListener
 		this.btSupprimer.addActionListener(this);
 		this.btEditer.addActionListener(this);
 		
+		this.cbEntreprise.addActionListener(this);
+		this.cbParticulier.addActionListener(this);
+		
 		//construction de la JTable
 		String entete [] = {"ID Client", "Nom", "Prenom", "Date Naiss", "Rue", "Ville", "Code Postal", "Telephone", "Email", "MDP", "Raison", "Domaine", "Siret"};
 		Object [][] lesDonnees = remplirDonnees ();
@@ -246,7 +249,7 @@ public class VueClients extends JPanel implements ActionListener
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		  ((JCheckBox) e.getSource()).setSelected(false);
+
 		switch (e.getActionCommand()) {
 		case "Ajouter":
 		{
@@ -277,9 +280,9 @@ public class VueClients extends JPanel implements ActionListener
 					// mise a jour de la Jtable
 					Particulier leParticulier = ModeleClients.selectWhereP(unParticulier);
 					
-					Object ligne [] = {leParticulier.getIdclient(), leParticulier.getNom(), leParticulier.getPrenom(), leParticulier.getDatenaiss(),
+					Object ligne [] = {leParticulier.getIdclient(), leParticulier.getNom(), leParticulier.getPrenom(),
 							leParticulier.getRue(), leParticulier.getVille(), leParticulier.getCp(), leParticulier.getTel(), leParticulier.getMail(),
-							leParticulier.getMdp(),"","",""}; 
+							leParticulier.getMdp(), leParticulier.getDatenaiss(),"","",""}; 
 					
 					
 					//appel de la methode pour ajouter cette ligne dans la tableau
@@ -353,55 +356,201 @@ public class VueClients extends JPanel implements ActionListener
 			
 		}
 			break;
-		/*	
+			//---------------------------------------------------------------------------------SUPPRIMER PARTICULIER-------------------------------------------------------------
 		case "Supprimer":
-		{			
-			String nom = txtNom.getText();
-			String adresse = txtAdresse.getText();
-			if (txtIdclient.getText().equals("") || nom.equals("") || adresse.equals(""))
-			{
-				JOptionPane.showMessageDialog(this, "Veuillez remplir les champs");
-			}
-			else
-			{
-				int idclient = Integer.parseInt(txtIdclient.getText());
-				Client unClient = new Client(idclient, nom, adresse);
-				Modele.deleteClient(unClient);
-				JOptionPane.showMessageDialog(this, "Suppression réussie");
-				
-				int rowIndex = this.tableClients.getSelectedRow();
-				unTableau.delete(rowIndex);
-				
-				txtIdclient.setText("");
-				txtNom.setText("");
-				txtAdresse.setText("");								
-			}				
-				
-		}
-			break;
-		case "Editer":
 		{
-			String nom = txtNom.getText();
-			String adresse = txtAdresse.getText();
-			if (txtIdclient.getText().equals("") || nom.equals("") || adresse.equals(""))
+			boolean particulier = this.cbParticulier.isSelected();
+			boolean entreprise = this.cbEntreprise.isSelected();
+			if(particulier == true) 
+			{				
+				String nom = this.txtNom.getText();
+				String prenom = this.txtPrenom.getText();
+				String datenaiss = this.txtDateNaiss.getText();
+				String rue = this.txtRue.getText(); 
+				String ville = this.txtVille.getText(); 
+				String cp = this.txtCP.getText(); 
+				String tel = this.txtTel.getText();
+				String mail = this.txtMail.getText(); 
+				String mdp = this.txtMDP.getText();
+						
+				if (nom.equals("") || prenom.equals("") || datenaiss.equals(""))
+				{
+					JOptionPane.showMessageDialog(this, "Veuillez remplir le ou les champs suivants: Nom, Prenom");
+				}
+				else
+				{
+					int idclient = Integer.parseInt(txtIdclient.getText());
+					Particulier unParticulier = new Particulier (idclient, nom, prenom, rue, ville, cp, tel, mail, mdp, datenaiss);
+					ModeleClients.deleteParticulier(unParticulier);
+					JOptionPane.showMessageDialog(this, "Suppression réussie");
+					
+					int rowIndex = this.tableClients.getSelectedRow();
+					unTableau.delete(rowIndex);
+					
+					this.txtIdclient.setText("");
+					this.txtNom.setText("");
+					this.txtPrenom.setText("");
+					this.txtDateNaiss.setText("");
+					this.txtRue.setText("");
+					this.txtVille.setText("");
+					this.txtCP.setText("");
+					this.txtTel.setText("");
+					this.txtMail.setText("");
+					this.txtMDP.setText(""); 
+					this.txtRaison.setText("");
+					this.txtDomaine.setText("");
+					this.txtSiret.setText("");
+				}
+			}
+//---------------------------------------------------------------------------------SUPRIMMER ENTREPRISE-------------------------------------------------------------
+			else if(entreprise == true)
 			{
-				JOptionPane.showMessageDialog(this, "Veuillez remplir les champs");
+				String nom = this.txtNom.getText();
+				String prenom = this.txtPrenom.getText();
+				String rue = this.txtRue.getText(); 
+				String datenaiss = this.txtDateNaiss.getText();
+				String ville = this.txtVille.getText(); 
+				String cp = this.txtCP.getText(); 
+				String tel = this.txtTel.getText();
+				String mail = this.txtMail.getText(); 
+				String mdp = this.txtMDP.getText();
+				String raison = this.txtRaison.getText();
+				String domaine = this.txtDomaine.getText();
+				String siret = this.txtSiret.getText();
+						
+				if (nom.equals("") || raison.equals("") || siret.equals("") )
+				{
+					JOptionPane.showMessageDialog(this, "Veuillez remplir le ou les champs suivants: Nom, Raison, Siret");
+				}
+				else
+				{
+					int idclient = Integer.parseInt(txtIdclient.getText());
+					Entreprise uneEntreprise = new Entreprise (idclient, nom, prenom, rue, ville, cp, tel, mail, mdp, raison, domaine, siret);
+					ModeleClients.deleteEntreprise(uneEntreprise);
+					JOptionPane.showMessageDialog(this, "Suppression de l'entreprise réussie");
+					
+					int rowIndex = this.tableClients.getSelectedRow();
+					unTableau.delete(rowIndex);
+					
+					this.txtIdclient.setText("");
+					this.txtNom.setText("");
+					this.txtPrenom.setText("");					
+					this.txtRue.setText("");
+					this.txtDateNaiss.setText("");
+					this.txtVille.setText("");
+					this.txtCP.setText("");
+					this.txtTel.setText("");
+					this.txtMail.setText("");
+					this.txtMDP.setText(""); 
+					this.txtRaison.setText("");
+					this.txtDomaine.setText("");
+					this.txtSiret.setText("");
+				}
 			}
 			else
+				JOptionPane.showMessageDialog(this, "Veuillez cocher le type de votre client : Entreprise ou Particulier ?");
+			
+		}
+		break ;
+		//---------------------------------------------------------------------------------MODIFIER PARTICULIER-------------------------------------------------------------
+		case "Modifier":
 			{
-				int idclient = Integer.parseInt(txtIdclient.getText());			
-				Client unClient = new Client(idclient, nom, adresse);
-				Modele.updateClient(unClient);
-				JOptionPane.showMessageDialog(this, "Mise à jour réussie");
-				Object ligne [] = {unClient.getIdclient(), unClient.getNom(), unClient.getAdresse()};
-				int rowIndex = this.tableClients.getSelectedRow();
-				unTableau.update(rowIndex, ligne);
-				txtIdclient.setText("");
-				txtNom.setText("");
-				txtAdresse.setText("");							
-			}			
-		} */
-		}	
-		
+				boolean particulier = this.cbParticulier.isSelected();
+				boolean entreprise = this.cbEntreprise.isSelected();
+				if(particulier == true) 
+				{				
+					String nom = this.txtNom.getText();
+					String prenom = this.txtPrenom.getText();
+					String datenaiss = this.txtDateNaiss.getText();
+					String rue = this.txtRue.getText(); 
+					String ville = this.txtVille.getText(); 
+					String cp = this.txtCP.getText(); 
+					String tel = this.txtTel.getText();
+					String mail = this.txtMail.getText(); 
+					String mdp = this.txtMDP.getText();
+							
+					if (nom.equals("") || prenom.equals(""))
+					{
+						JOptionPane.showMessageDialog(this, "Veuillez remplir le ou les champs suivants: Nom, Prenom");
+					}
+					else
+					{
+						int idclient = Integer.parseInt(txtIdclient.getText());			
+						Particulier unParticulier = new Particulier (idclient, nom, prenom, rue, ville, cp, tel, mail, mdp, datenaiss);
+						ModeleClients.updateParticulier(unParticulier);
+						JOptionPane.showMessageDialog(this, "Mise à jour du particulier réussie");
+						Object ligne [] = {unParticulier.getIdclient(), unParticulier.getNom(), unParticulier.getPrenom(), unParticulier.getDatenaiss(),
+								unParticulier.getRue(), unParticulier.getVille(), unParticulier.getCp(), unParticulier.getTel(), unParticulier.getMail(),
+								unParticulier.getMdp(),"","",""};
+						
+						int rowIndex = this.tableClients.getSelectedRow();
+						unTableau.update(rowIndex, ligne);
+						
+						this.txtIdclient.setText("");
+						this.txtNom.setText("");
+						this.txtPrenom.setText("");
+						this.txtDateNaiss.setText("");
+						this.txtRue.setText("");
+						this.txtVille.setText("");
+						this.txtCP.setText("");
+						this.txtTel.setText("");
+						this.txtMail.setText("");
+						this.txtMDP.setText(""); 
+						this.txtRaison.setText("");
+						this.txtDomaine.setText("");
+						this.txtSiret.setText("");
+					}
+				}
+			//---------------------------------------------------------------------------------MODIFIER ENTREPRISE-------------------------------------------------------------
+				else if(entreprise == true)
+				{
+					String nom = this.txtNom.getText();
+					String prenom = this.txtPrenom.getText();
+					String rue = this.txtRue.getText(); 
+					String ville = this.txtVille.getText(); 
+					String cp = this.txtCP.getText(); 
+					String tel = this.txtTel.getText();
+					String mail = this.txtMail.getText(); 
+					String mdp = this.txtMDP.getText();
+					String raison = this.txtRaison.getText();
+					String domaine = this.txtDomaine.getText();
+					String siret = this.txtSiret.getText();
+							
+					if (nom.equals("") || raison.equals("") || siret.equals("") )
+					{
+						JOptionPane.showMessageDialog(this, "Veuillez remplir le ou les champs suivants: Nom, Raison, Siret");
+					}
+					else
+					{
+						int idclient = Integer.parseInt(txtIdclient.getText());
+						Entreprise uneEntreprise = new Entreprise (idclient, nom, prenom, rue, ville, cp, tel, mail, mdp, raison, domaine, siret);
+						ModeleClients.updateEntreprise(uneEntreprise);
+						JOptionPane.showMessageDialog(this, "Mise à jour de l'entreprise réussie");
+						Object ligne [] = {uneEntreprise.getIdclient(), uneEntreprise.getNom(), uneEntreprise.getPrenom(), "", uneEntreprise.getRue(), uneEntreprise.getVille(), uneEntreprise.getCp(), 
+								uneEntreprise.getTel(), uneEntreprise.getMail(), uneEntreprise.getMdp(), uneEntreprise.getRaison(), uneEntreprise.getDomaine(), uneEntreprise.getSiret()};
+						
+						int rowIndex = this.tableClients.getSelectedRow();
+						unTableau.update(rowIndex, ligne);
+				
+						
+						this.txtIdclient.setText("");
+						this.txtNom.setText("");
+						this.txtPrenom.setText("");					
+						this.txtRue.setText("");
+						this.txtDateNaiss.setText("");
+						this.txtVille.setText("");
+						this.txtCP.setText("");
+						this.txtTel.setText("");
+						this.txtMail.setText("");
+						this.txtMDP.setText(""); 
+						this.txtRaison.setText("");
+						this.txtDomaine.setText("");
+						this.txtSiret.setText("");
+					}
+				}
+				else
+					JOptionPane.showMessageDialog(this, "Veuillez cocher le type de votre client : Entreprise ou Particulier ?");
+			}
+		}
 	}
 }
