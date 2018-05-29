@@ -41,7 +41,7 @@ public class VueSalarie extends JPanel implements ActionListener
 		
 		public VueSalarie()
 		{
-			this.setBounds(40, 140, 1440, 760);
+			this.setBounds(30, 100, 1440, 760);
 			this.setBackground(Color.blue);
 			this.setLayout(null); // les surface
 			

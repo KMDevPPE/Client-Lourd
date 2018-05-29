@@ -47,7 +47,7 @@ public class VueMateriaux extends JPanel  implements ActionListener
 	
 	public VueMateriaux()
 	{
-		this.setBounds(40, 140, 1440, 760);
+		this.setBounds(40, 100, 1440, 760);
 		this.setBackground(Color.green);
 		this.setLayout(null); // les surface
 		

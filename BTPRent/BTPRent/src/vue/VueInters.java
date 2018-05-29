@@ -23,7 +23,7 @@ public class VueInters extends JPanel
 	
 	public VueInters()
 	{
-		this.setBounds(40, 140, 1440, 760);
+		this.setBounds(40, 100, 1440, 760);
 		this.setBackground(Color.RED);
 		this.setLayout(null); // les surface
 		
@@ -32,7 +32,7 @@ public class VueInters extends JPanel
 		this.unTableau = new Tableau(getDonnees(), entete);
 		this.tableEtats = new JTable(unTableau);
 		JScrollPane uneScroll = new JScrollPane(tableEtats);
-		uneScroll.setBounds(50, 50, 800, 150);
+		uneScroll.setBounds(50, 20, 1350, 550);
 		this.add(uneScroll);
 		
 	

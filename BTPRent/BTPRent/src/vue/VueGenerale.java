@@ -20,6 +20,7 @@ public class VueGenerale extends JFrame implements ActionListener
 	private JButton btInters = new JButton("Interventions");
 	private JButton btSalaries = new JButton("Salariés");
 	private JButton btMateriaux = new JButton("Matériaux");
+	private JButton btContrats = new JButton("Contrats");
 	
 	
 	
@@ -29,6 +30,7 @@ public class VueGenerale extends JFrame implements ActionListener
 	private VueTechs uneVueTechs = new VueTechs();
 	private VueSalarie uneVueSalaries = new VueSalarie();
 	private VueMateriaux uneVueMateriaux = new VueMateriaux();
+	private VueContrats uneVueContrats = new VueContrats();
 	
 	
 	public VueGenerale() {
@@ -52,6 +54,7 @@ public class VueGenerale extends JFrame implements ActionListener
 		this.plMenu.add(btInters);
 		this.plMenu.add(btSalaries);
 		this.plMenu.add(btMateriaux);
+		this.plMenu.add(btContrats);
 		this.add(this.plMenu);
 		
 		//rendre les trois boutons cliquables
@@ -60,6 +63,7 @@ public class VueGenerale extends JFrame implements ActionListener
 		this.btTechs.addActionListener(this);
 		this.btSalaries.addActionListener(this);
 		this.btMateriaux.addActionListener(this);
+		this.btContrats.addActionListener(this);
 		
 		//ajout des panels a la vue
 		this.add(this.uneVueClients);
@@ -67,6 +71,7 @@ public class VueGenerale extends JFrame implements ActionListener
 		this.add(this.uneVueTechs);
 		this.add(this.uneVueSalaries);
 		this.add(this.uneVueMateriaux);
+		this.add(this.uneVueContrats);
 		
 		this.setVisible(true);
 	}
@@ -83,6 +88,7 @@ public class VueGenerale extends JFrame implements ActionListener
 					this.uneVueTechs.setVisible(false);
 					this.uneVueSalaries.setVisible(false);
 					this.uneVueMateriaux.setVisible(false);
+					this.uneVueContrats.setVisible(false);
 					break;
 		case "Techniciens" :
 			this.uneVueClients.setVisible(false);
@@ -90,6 +96,7 @@ public class VueGenerale extends JFrame implements ActionListener
 			this.uneVueTechs.setVisible(true);
 			this.uneVueSalaries.setVisible(false);
 			this.uneVueMateriaux.setVisible(false);
+			this.uneVueContrats.setVisible(false);
 			break;
 		case "Interventions" :
 			this.uneVueClients.setVisible(false);
@@ -97,6 +104,7 @@ public class VueGenerale extends JFrame implements ActionListener
 			this.uneVueTechs.setVisible(false);
 			this.uneVueSalaries.setVisible(false);
 			this.uneVueMateriaux.setVisible(false);
+			this.uneVueContrats.setVisible(false);
 			break;
 		case "Salariés" :
 			this.uneVueClients.setVisible(false);
@@ -104,6 +112,7 @@ public class VueGenerale extends JFrame implements ActionListener
 			this.uneVueTechs.setVisible(false);
 			this.uneVueSalaries.setVisible(true);
 			this.uneVueMateriaux.setVisible(false);
+			this.uneVueContrats.setVisible(false);
 			break;
 		case "Matériaux" :
 			this.uneVueClients.setVisible(false);
@@ -111,6 +120,15 @@ public class VueGenerale extends JFrame implements ActionListener
 			this.uneVueTechs.setVisible(false);
 			this.uneVueSalaries.setVisible(false);
 			this.uneVueMateriaux.setVisible(true);
+			this.uneVueContrats.setVisible(false);
+			break;
+		case "Contrats" :
+			this.uneVueClients.setVisible(false);
+			this.uneVueInters.setVisible(false);
+			this.uneVueTechs.setVisible(false);
+			this.uneVueSalaries.setVisible(false);
+			this.uneVueMateriaux.setVisible(false);
+			this.uneVueContrats.setVisible(true);
 			break;
 		}
 		

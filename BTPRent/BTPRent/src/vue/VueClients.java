@@ -53,7 +53,7 @@ public class VueClients extends JPanel implements ActionListener
 		
 	public VueClients()
 	{
-		this.setBounds(40, 140, 1440, 760);
+		this.setBounds(40, 100, 1440, 760);
 		this.setBackground(Color.cyan);
 		this.setLayout(null); // les surface
 		
@@ -362,7 +362,7 @@ public class VueClients extends JPanel implements ActionListener
 			boolean particulier = this.cbParticulier.isSelected();
 			boolean entreprise = this.cbEntreprise.isSelected();
 			if(particulier == true) 
-			{				
+			{						
 				String nom = this.txtNom.getText();
 				String prenom = this.txtPrenom.getText();
 				String datenaiss = this.txtDateNaiss.getText();

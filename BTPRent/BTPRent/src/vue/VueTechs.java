@@ -39,7 +39,7 @@ public class VueTechs extends JPanel implements ActionListener
 		
 		public VueTechs()
 		{
-			this.setBounds(40, 140, 1440, 760);
+			this.setBounds(40, 100, 1440, 760);
 			this.setBackground(Color.yellow);
 			this.setLayout(null); // les surface
 			
