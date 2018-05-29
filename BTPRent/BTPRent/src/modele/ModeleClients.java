@@ -9,8 +9,6 @@ import java.util.ArrayList;
 import controleur.Client;
 import controleur.Particulier;
 import controleur.Entreprise;
-import controleur.Etat;
-import controleur.Salarie;
 
 public class ModeleClients 
 {
