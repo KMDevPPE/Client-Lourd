@@ -45,7 +45,7 @@ public class VueGenerale extends JFrame implements ActionListener
 		//this.setBounds(300, 100, longueur, hauteur);
 		this.setSize(longueur, hauteur);
 		this.setLocationRelativeTo(null); //On centre la fenêtre sur l'écran
-		this.setResizable(false); //On interdit la redimensionnement de la fenêtre
+		this.setResizable(true); //On interdit la redimensionnement de la fenêtre
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.getContentPane().setBackground(Color.lightGray);
 		
