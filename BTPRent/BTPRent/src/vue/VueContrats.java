@@ -21,7 +21,6 @@ import javax.swing.JTextField;
 import controleur.Contrat;
 import controleur.Salarie;
 import controleur.Tableau;
-import modele.Modele;
 import modele.ModeleContrats;
 
 public class VueContrats extends JPanel implements ActionListener
@@ -42,19 +41,19 @@ public class VueContrats extends JPanel implements ActionListener
 	private JTextField txtDateFin = new JTextField();	
 	//récuperer la dimension de l'écran
 	Dimension tailleMoniteur = Toolkit.getDefaultToolkit().getScreenSize();
-	int longueur = tailleMoniteur.width * 2/3;
-	int hauteur = tailleMoniteur.height * 2/3;
+	int largeur = tailleMoniteur.width * 4/5;
+	int hauteur = tailleMoniteur.height * 4/5;
 	
 	public VueContrats()
 	{
-		this.setBounds(30, 100, 1440, 760);
+		this.setBounds(0, hauteur/10, largeur, hauteur);
 		this.setBackground(Color.pink);
 		this.setLayout(null); // les surface
 		
 		JPanel unPanel = new JPanel ();
-		unPanel.setBounds(40, 550, 1350, 120);
+		unPanel.setBounds(largeur/40, hauteur*2/3, largeur-(largeur/20), 120);
 		unPanel.setLayout(new GridLayout(5, 4));
-		
+		System.out.println(+largeur+" "+hauteur);
 		 //premiere case vide
 		unPanel.add(new JLabel(""));
 		unPanel.add(new JLabel("ID Contrat"));
@@ -141,7 +140,7 @@ public class VueContrats extends JPanel implements ActionListener
 		});
 		
 		JScrollPane uneScroll = new JScrollPane(tableContrats);
-		uneScroll.setBounds(50, 20, 1340, 500);
+		uneScroll.setBounds(largeur/40, largeur/60, largeur-(largeur/20), hauteur*3/5);
 		this.add(uneScroll);
 		this.setVisible(false);
 	}

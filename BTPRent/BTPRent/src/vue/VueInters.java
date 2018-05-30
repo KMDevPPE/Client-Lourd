@@ -1,6 +1,8 @@
 package vue;
 
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -20,10 +22,16 @@ public class VueInters extends JPanel
 	private Tableau unTableau;
 	private JTable tableEtats ;
 	
+	//récuperer la dimension de l'écran
+		Dimension tailleMoniteur = Toolkit.getDefaultToolkit().getScreenSize();
+		int largeur = tailleMoniteur.width * 4/5;
+		int hauteur = tailleMoniteur.height * 4/5;
+	
 	
 	public VueInters()
 	{
-		this.setBounds(40, 100, 1440, 760);
+
+		this.setBounds(0, hauteur/10, largeur, hauteur);
 		this.setBackground(Color.RED);
 		this.setLayout(null); // les surface
 		
@@ -32,7 +40,7 @@ public class VueInters extends JPanel
 		this.unTableau = new Tableau(getDonnees(), entete);
 		this.tableEtats = new JTable(unTableau);
 		JScrollPane uneScroll = new JScrollPane(tableEtats);
-		uneScroll.setBounds(50, 20, 1350, 550);
+		uneScroll.setBounds(largeur/40, largeur/60, largeur-(largeur/20), hauteur*3/5);
 		this.add(uneScroll);
 		
 	

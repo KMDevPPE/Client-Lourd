@@ -26,8 +26,8 @@ public class VueGenerale extends JFrame implements ActionListener
 	
 	//récuperer la dimension de l'écran
 	Dimension tailleMoniteur = Toolkit.getDefaultToolkit().getScreenSize();
-	int longueur = tailleMoniteur.width * 2/3;
-	int hauteur = tailleMoniteur.height * 2/3;
+	int longueur = tailleMoniteur.width * 4/5;
+	int hauteur = tailleMoniteur.height * 4/5;
 	
 	
 	//creation des panels
@@ -42,19 +42,21 @@ public class VueGenerale extends JFrame implements ActionListener
 	public VueGenerale() {
 		this.setTitle("Logiciel de gestion des locations");
 		this.setLayout(null);
-		this.setBounds(300, 100, longueur, hauteur);
-		this.setResizable(false);
+		//this.setBounds(300, 100, longueur, hauteur);
+		this.setSize(longueur, hauteur);
+		this.setLocationRelativeTo(null); //On centre la fenêtre sur l'écran
+		this.setResizable(false); //On interdit la redimensionnement de la fenêtre
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.getContentPane().setBackground(Color.lightGray);
 		
 		//place le boutton quitter
-		this.btQuitter.setBounds(600, 820, 200, 40);
+		this.btQuitter.setBounds((longueur-longueur/10)/2, hauteur-(hauteur/12), longueur/10, hauteur/20);
 		this.add(this.btQuitter);
 		this.btQuitter.addActionListener(this);
 		
 		//construction du panel menu
-		this.plMenu.setBounds(0, 40, longueur, 60);
-		this.plMenu.setLayout(new GridLayout(1, 3));
+		this.plMenu.setBounds(0, 10, longueur, 60);
+		this.plMenu.setLayout(new GridLayout(1, 6));
 		this.plMenu.add(btClients);
 		this.plMenu.add(btTechs);
 		this.plMenu.add(btInters);

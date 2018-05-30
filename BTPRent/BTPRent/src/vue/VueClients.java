@@ -1,7 +1,9 @@
 package vue;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -50,15 +52,20 @@ public class VueClients extends JPanel implements ActionListener
 	private JTextField txtMail = new JTextField();
 	private JTextField txtMDP = new JTextField();
 	
+	//récuperer la dimension de l'écran
+		Dimension tailleMoniteur = Toolkit.getDefaultToolkit().getScreenSize();
+		int largeur = tailleMoniteur.width * 4/5;
+		int hauteur = tailleMoniteur.height * 4/5;
+	
 		
 	public VueClients()
 	{
-		this.setBounds(40, 100, 1440, 760);
+		this.setBounds(0, hauteur/10, largeur, hauteur);
 		this.setBackground(Color.cyan);
 		this.setLayout(null); // les surface
 		
 		JPanel unPanel = new JPanel ();
-		unPanel.setBounds(40, 550, 1350, 120);
+		unPanel.setBounds(largeur/40, hauteur*2/3, largeur-(largeur/20), 120);
 		unPanel.setLayout(new GridLayout(8, 4));
 		
 		 //premiere case vide
@@ -188,7 +195,7 @@ public class VueClients extends JPanel implements ActionListener
 		});
 		
 		JScrollPane uneScroll = new JScrollPane(tableClients);
-		uneScroll.setBounds(50, 20, 1340, 500);
+		uneScroll.setBounds(largeur/40, largeur/60, largeur-(largeur/20), hauteur*3/5);
 		this.add(uneScroll);
 		this.setVisible(false);
 	}
