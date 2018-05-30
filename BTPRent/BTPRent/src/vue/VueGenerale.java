@@ -1,7 +1,9 @@
 package vue;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -22,6 +24,10 @@ public class VueGenerale extends JFrame implements ActionListener
 	private JButton btMateriaux = new JButton("Matériaux");
 	private JButton btContrats = new JButton("Contrats");
 	
+	//récuperer la dimension de l'écran
+	Dimension tailleMoniteur = Toolkit.getDefaultToolkit().getScreenSize();
+	int longueur = tailleMoniteur.width * 2/3;
+	int hauteur = tailleMoniteur.height * 2/3;
 	
 	
 	//creation des panels
@@ -36,7 +42,7 @@ public class VueGenerale extends JFrame implements ActionListener
 	public VueGenerale() {
 		this.setTitle("Logiciel de gestion des locations");
 		this.setLayout(null);
-		this.setBounds(300, 100, 1500, 900);
+		this.setBounds(300, 100, longueur, hauteur);
 		this.setResizable(false);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.getContentPane().setBackground(Color.lightGray);
@@ -47,7 +53,7 @@ public class VueGenerale extends JFrame implements ActionListener
 		this.btQuitter.addActionListener(this);
 		
 		//construction du panel menu
-		this.plMenu.setBounds(0, 40, 1500, 60);
+		this.plMenu.setBounds(0, 40, longueur, 60);
 		this.plMenu.setLayout(new GridLayout(1, 3));
 		this.plMenu.add(btClients);
 		this.plMenu.add(btTechs);

@@ -6,6 +6,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import controleur.Etat;
+import controleur.Salarie;
 import controleur.Contrat;
 
 public class ModeleContrats
@@ -13,8 +14,11 @@ public class ModeleContrats
 	public static ArrayList<Contrat> selectAllContrat ()
 	{
 		ArrayList<Contrat> lesContrats = new ArrayList<Contrat>(); // "ID Contrat", "Nom du client", "Matériel loué", "Employé référent", "Date de début", "Date de fin"
-		String requete = "select co.ID_CONT , c.NOM_C, m.NOM_M, s.NOM_S, co.Date_deb, co.date_f from CONTRAT CO LEFT JOIN(Client c, Materiel m, Salarie s)"
-				+ " ON (c.ID_C = co.ID_C AND m.ID_M = co.ID_M AND s.ID_S = co.ID_S) ;"; 
+		/*String requete = "select co.ID_CONT , c.NOM_C, m.NOM_M, s.NOM_S, co.Date_deb, co.date_f from CONTRAT CO LEFT JOIN(Client c, Materiel m, Salarie s)"
+				+ " ON (c.ID_C = co.ID_C AND m.ID_M = co.ID_M AND s.ID_S = co.ID_S) ;"; */
+		
+		String requete = "SELECT co.ID_CONT , c.NOM_C, m.NOM_M, s.NOM_S, co.Date_deb, co.date_f FROM CONTRAT CO" + 
+				" LEFT JOIN Client c ON c.ID_C = co.ID_C LEFT JOIN Materiel m ON m.ID_M = co.ID_M LEFT JOIN Salarie s ON s.ID_S = co.ID_S;" ;
 		
 		BDD uneBdd = new BDD("localhost", "BTPRent", "root", "");
 		try
@@ -107,6 +111,37 @@ public class ModeleContrats
 			System.out.println("Erreur : " + requete);
 		}
 		return lesEtats;
+	}
+	
+	public static void updateSalarieContrat (Contrat unContrat, Salarie unSalarie)
+	{
+		String ReqIdSalarie = "(select ID_S from salarie where NOM_S = '"+unSalarie.getNom()+"' )";
+		BDD uneBdd = new BDD("localhost", "BTPRent", "root", "");
+		try
+		{
+			uneBdd.seConnecter();
+			Statement unStat = uneBdd.getMaConnexion().createStatement();
+			unStat.execute(ReqIdSalarie);
+			unStat.close();
+			uneBdd.seDeconnecter();
+		}
+		catch (SQLException exp)
+		{
+			System.out.println("Erreur : " + ReqIdSalarie);
+		}
+		String requete = "update contrat set ID_S ="+ReqIdSalarie+" where ID_CONT = "+unContrat.getIdContrat()+";";
+		try
+		{
+			uneBdd.seConnecter();
+			Statement unStat = uneBdd.getMaConnexion().createStatement();
+			unStat.execute(requete);
+			unStat.close();
+			uneBdd.seDeconnecter();
+		}
+		catch (SQLException exp)
+		{
+			System.out.println("Erreur : " + requete);
+		}
 	}
 } 
 

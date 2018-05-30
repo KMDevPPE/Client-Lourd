@@ -1,7 +1,9 @@
 package vue;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -10,18 +12,21 @@ import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 
 import controleur.Contrat;
+import controleur.Salarie;
 import controleur.Tableau;
+import modele.Modele;
 import modele.ModeleContrats;
 
 public class VueContrats extends JPanel implements ActionListener
 {
-	private JButton btAjouter = new JButton("Ajouter");
+	private JButton btAjouter = new JButton("Ajouter Référent");
 	private JButton btSupprimer = new JButton("Supprimer");
 	private JButton btEditer = new JButton("Editer");
 	
@@ -35,6 +40,10 @@ public class VueContrats extends JPanel implements ActionListener
 	private JTextField txtNomReferent = new JTextField();
 	private JTextField txtDateDebut = new JTextField();
 	private JTextField txtDateFin = new JTextField();	
+	//récuperer la dimension de l'écran
+	Dimension tailleMoniteur = Toolkit.getDefaultToolkit().getScreenSize();
+	int longueur = tailleMoniteur.width * 2/3;
+	int hauteur = tailleMoniteur.height * 2/3;
 	
 	public VueContrats()
 	{
@@ -168,7 +177,41 @@ public class VueContrats extends JPanel implements ActionListener
 	@Override
 	public void actionPerformed(ActionEvent e) 
 	{
-		// TODO Auto-generated method stub
+		switch (e.getActionCommand()) 
+		{
+			case "Ajouter Référent":
+			{
+				String nomClient = txtNomClient.getText();
+				String nomMateriel = txtNomMateriel.getText();
+				String nomRef = txtNomReferent.getText();
+				String dateDeb = txtDateDebut.getText();
+				String dateFin = txtDateFin.getText();
+				
+				if (txtIdContrat.getText().equals("") || nomRef.equals(""))
+				{
+					JOptionPane.showMessageDialog(this, "Veuillez sélectionner un contrat");
+				}
+				else
+				{
+					int idContrat = Integer.parseInt(txtIdContrat.getText());
+					Salarie unSalarie = new Salarie(nomRef);		
+					Contrat unContrat = new Contrat(idContrat, nomClient, nomMateriel, nomRef, dateDeb, dateFin);
+					ModeleContrats.updateSalarieContrat(unContrat, unSalarie);
+					JOptionPane.showMessageDialog(this, "Mise à jour réussie");
+					Object ligne [] = {unContrat.getIdContrat(), unContrat.getNomClient(), unContrat.getNomMateriel(), unContrat.getNomSalarie(),
+							unContrat.getDateDebut(), unContrat.getDateFin()};
+					int rowIndex = this.tableContrats.getSelectedRow();
+					unTableau.update(rowIndex, ligne);
+					txtIdContrat.setText("");
+					txtNomClient.setText("");
+					txtNomMateriel.setText("");
+					txtNomReferent.setText("");
+					txtDateDebut.setText("");
+					txtDateFin.setText("");							
+				}			
+			}			
+		}
+	
 		
 	}
 }	

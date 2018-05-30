@@ -163,8 +163,10 @@ public class VueSalarie extends JPanel implements ActionListener
 
 
 		@Override
-		public void actionPerformed(ActionEvent e) {
-			switch (e.getActionCommand()) {
+	public void actionPerformed(ActionEvent e) 
+	{
+		switch (e.getActionCommand()) 
+		{
 			case "Ajouter":
 			{
 				String nom = this.txtNom.getText();

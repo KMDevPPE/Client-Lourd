@@ -17,6 +17,17 @@ public class Salarie {
 			
 		}
 		
+		public Salarie (String nom)
+		{
+			this.idsalarie = 0;
+			this.nom = nom;
+			this.prenom = "";
+			this.mail = "";
+			this.mdp = "";
+			this.droits = "";	
+			
+		}
+		
 		public Salarie (int idsalarie, String nom, String prenom, String mail, String mdp, String droits)
 		{
 			this.idsalarie = idsalarie;
