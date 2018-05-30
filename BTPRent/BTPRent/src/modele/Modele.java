@@ -155,7 +155,7 @@ public class Modele
 	
 	//---------------------------------------------------------MODELE SALARIE ---------------------------------------------------------
 	
-	public static void insertSalarie (Salarie unSalarie) 
+	public static void insertSalarie (Salarie unSalarie)  //Ajout d'un salarié avec jdbc en requetant
 	{
 		String requete = "insert into salarie (ID_S, NOM_S, PRENOM_S, mail, mdp, droits) values (null, '" + unSalarie.getNom()+"' , '" + unSalarie.getPrenom()+"' , '" + unSalarie.getMail()+"' , '" + unSalarie.getMdp()+"' , '" + unSalarie.getDroits() + "' );";
 		
@@ -174,7 +174,7 @@ public class Modele
 		}
 	}
 	
-	public static ArrayList<Salarie> selectAllSalarie ()
+	public static ArrayList<Salarie> selectAllSalarie ()  // selectionne tous les salariés de la BDD
 	{
 		ArrayList<Salarie> lesSalaries = new ArrayList<Salarie>();
 		String requete = "select ID_S, NOM_S, PRENOM_S, MAIL, mdp, droits from salarie ;";
@@ -208,7 +208,7 @@ public class Modele
 		return lesSalaries;
 	}
 	
-	public static void deleteSalarie (Salarie unSalarie)
+	public static void deleteSalarie (Salarie unSalarie) //supprime un salarié par son ID
 	{
 		String requete = "delete from salarie where ID_S =" +unSalarie.getIdsalarie() +";";
 		BDD uneBdd = new BDD("localhost", "BTPRent", "root", "");
@@ -226,7 +226,7 @@ public class Modele
 		}
 	}
 	
-	public static void updateSalarie (Salarie unSalarie)
+	public static void updateSalarie (Salarie unSalarie) // modifie le ou les champs spécifiques d'un salarié
 	{
 		String requete = "update salarie set nom_s ='" + unSalarie.getNom() + "',prenom_s='" +unSalarie.getPrenom() + "',mail='" +unSalarie.getMail() + "',mdp='" +unSalarie.getMdp() + "',droits='" +unSalarie.getDroits() + "' where ID_S = " + unSalarie.getIdsalarie() +";";
 		BDD uneBdd = new BDD("localhost", "BTPRent", "root", "");
@@ -244,7 +244,7 @@ public class Modele
 		}
 	}
 	
-	public static Salarie selectWhere (Salarie unSalarie)
+	public static Salarie selectWhere (Salarie unSalarie) // affiche un salarié en fonction de son nom et prenom 
 	{
 		String requete = "select * from salarie where " + "nom_s = '" + unSalarie.getNom() + "' and prenom_s = '" + unSalarie.getPrenom()+ "' ; ";
 		Salarie leSalarie = null ;

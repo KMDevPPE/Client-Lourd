@@ -60,7 +60,7 @@ public class VueContrats extends JPanel implements ActionListener
 		unPanel.add(txtIdContrat);
 		unPanel.add(new JLabel("")); 
 		
-		unPanel.add(new JLabel("Nom :"));
+		unPanel.add(new JLabel("Nom Client:"));
 		unPanel.add(this.txtNomClient);
 		
 		unPanel.add(new JLabel("Matériel loué : "));
@@ -82,6 +82,8 @@ public class VueContrats extends JPanel implements ActionListener
 		unPanel.add(this.btEditer);
 		unPanel.add(new JLabel(""));
 		this.txtIdContrat.setEditable(false);
+		this.txtNomClient.setEditable(false);
+		this.txtNomMateriel.setEditable(false);
 		
 		unPanel.setVisible(true);
 		this.add(unPanel);

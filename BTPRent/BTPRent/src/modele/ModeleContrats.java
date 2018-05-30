@@ -13,9 +13,7 @@ public class ModeleContrats
 {
 	public static ArrayList<Contrat> selectAllContrat ()
 	{
-		ArrayList<Contrat> lesContrats = new ArrayList<Contrat>(); // "ID Contrat", "Nom du client", "Matériel loué", "Employé référent", "Date de début", "Date de fin"
-		/*String requete = "select co.ID_CONT , c.NOM_C, m.NOM_M, s.NOM_S, co.Date_deb, co.date_f from CONTRAT CO LEFT JOIN(Client c, Materiel m, Salarie s)"
-				+ " ON (c.ID_C = co.ID_C AND m.ID_M = co.ID_M AND s.ID_S = co.ID_S) ;"; */
+		ArrayList<Contrat> lesContrats = new ArrayList<Contrat>(); 
 		
 		String requete = "SELECT co.ID_CONT , c.NOM_C, m.NOM_M, s.NOM_S, co.Date_deb, co.date_f FROM CONTRAT CO" + 
 				" LEFT JOIN Client c ON c.ID_C = co.ID_C LEFT JOIN Materiel m ON m.ID_M = co.ID_M LEFT JOIN Salarie s ON s.ID_S = co.ID_S;" ;
@@ -49,9 +47,39 @@ public class ModeleContrats
 		return lesContrats;
 	}
 	
+	public static void updateSalarieContrat (Contrat unContrat, Salarie unSalarie) // Permet l'ajout ou la modif d'un référent salarié en rentrant le nom dans l'onglet contrat de l'app 
+	{																			  
+		String ReqIdSalarie = "(select ID_S from salarie where NOM_S = '"+unSalarie.getNom()+"' )";
+		BDD uneBdd = new BDD("localhost", "BTPRent", "root", "");
+		try
+		{
+			uneBdd.seConnecter();
+			Statement unStat = uneBdd.getMaConnexion().createStatement();
+			unStat.execute(ReqIdSalarie);
+			unStat.close();
+			uneBdd.seDeconnecter();
+		}
+		catch (SQLException exp)
+		{
+			System.out.println("Erreur : " + ReqIdSalarie);
+		}
+		String requete = "update contrat set ID_S ="+ReqIdSalarie+", Date_Deb ='"+unContrat.getDateDebut()+"', Date_F ='"+unContrat.getDateFin()+"' where ID_CONT = "+unContrat.getIdContrat()+";";
+		try
+		{
+			uneBdd.seConnecter();
+			Statement unStat = uneBdd.getMaConnexion().createStatement();
+			unStat.execute(requete);
+			unStat.close();
+			uneBdd.seDeconnecter();
+		}
+		catch (SQLException exp)
+		{
+			System.out.println("Erreur : " + requete);
+		}
+	}
 	
 	
-	public static Contrat selectWhere (Contrat unContrat)
+	public static Contrat selectWhere (Contrat unContrat) // INUTILE
 	{
 		String requete = "select co.ID_CONT , c.NOM_C, m.NOM_M, s.NOM_S, co.Date_deb, co.date_f from CONTRAT CO LEFT JOIN(Client c, Materiel m, Salarie s)"
 				+ " ON (c.ID_C = co.ID_C AND m.ID_M = co.ID_M AND s.ID_S = co.ID_S)  where " + "c.nom_C = '" + unContrat.getNomClient() + "' and m.NOM_M = '" + unContrat.getNomMateriel() + "' "
@@ -80,69 +108,7 @@ public class ModeleContrats
 		return leContrat;
 	}
 	
-	public static ArrayList<Etat> selectEtat ()  //vue etat
-	{
-		ArrayList<Etat> lesEtats = new ArrayList<Etat>();
-		String requete = "select NOM_C, NOMT, i.DATE_DEBUT, i.DATE_FIN, from INTERVENIR i LEFT JOIN (TECHNICIEN t, MATERIEL m) ON ( t.IDT = i.IDT AND m.ID_M = i.ID_M )"
-				+ " AND ;"; 
 	
-		BDD uneBdd = new BDD("localhost", "intervention", "root", "");
-		try
-		{
-			uneBdd.seConnecter();
-			Statement unStat = uneBdd.getMaConnexion().createStatement();
-			ResultSet unRes = unStat.executeQuery(requete);		
-			
-			while (unRes.next()) // tant qu'il y a un resultat
-			{
-				String nomC = unRes.getString("nomClient");
-				String nomT = unRes.getString("nomTechnicien");
-				String description = unRes.getString("description");
-				String dateInter = unRes.getString("dateInter");
-				Etat unEtat = new Etat(nomC, nomT ,description, dateInter); 
-				lesEtats.add(unEtat); 
-			}
-			unStat.close();
-			unRes.close();
-			uneBdd.seDeconnecter();
-		}		
-		catch (SQLException exp)
-		{
-			System.out.println("Erreur : " + requete);
-		}
-		return lesEtats;
-	}
-	
-	public static void updateSalarieContrat (Contrat unContrat, Salarie unSalarie)
-	{
-		String ReqIdSalarie = "(select ID_S from salarie where NOM_S = '"+unSalarie.getNom()+"' )";
-		BDD uneBdd = new BDD("localhost", "BTPRent", "root", "");
-		try
-		{
-			uneBdd.seConnecter();
-			Statement unStat = uneBdd.getMaConnexion().createStatement();
-			unStat.execute(ReqIdSalarie);
-			unStat.close();
-			uneBdd.seDeconnecter();
-		}
-		catch (SQLException exp)
-		{
-			System.out.println("Erreur : " + ReqIdSalarie);
-		}
-		String requete = "update contrat set ID_S ="+ReqIdSalarie+" where ID_CONT = "+unContrat.getIdContrat()+";";
-		try
-		{
-			uneBdd.seConnecter();
-			Statement unStat = uneBdd.getMaConnexion().createStatement();
-			unStat.execute(requete);
-			unStat.close();
-			uneBdd.seDeconnecter();
-		}
-		catch (SQLException exp)
-		{
-			System.out.println("Erreur : " + requete);
-		}
-	}
 } 
 
 /*-------------------------------------------------OLD CONTRAT AFFICHE JUSTE LES ID--------------------------
