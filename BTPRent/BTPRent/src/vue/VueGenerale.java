@@ -19,7 +19,7 @@ public class VueGenerale extends JFrame implements ActionListener
 	private JPanel plMenu = new JPanel();
 	private JButton btClients = new JButton("Clients");
 	private JButton btTechs = new JButton("Techniciens");
-	private JButton btInters = new JButton("Interventions");
+	private JButton btInterventions = new JButton("Interventions");
 	private JButton btSalaries = new JButton("Salariés");
 	private JButton btMateriaux = new JButton("Matériaux");
 	private JButton btContrats = new JButton("Contrats");
@@ -32,7 +32,7 @@ public class VueGenerale extends JFrame implements ActionListener
 	
 	//creation des panels
 	private VueClients uneVueClients = new VueClients();
-	private VueInters uneVueInters = new VueInters();
+	private VueInterventions uneVueInterventions = new VueInterventions();
 	private VueTechs uneVueTechs = new VueTechs();
 	private VueSalarie uneVueSalaries = new VueSalarie();
 	private VueMateriaux uneVueMateriaux = new VueMateriaux();
@@ -59,7 +59,7 @@ public class VueGenerale extends JFrame implements ActionListener
 		this.plMenu.setLayout(new GridLayout(1, 6));
 		this.plMenu.add(btClients);
 		this.plMenu.add(btTechs);
-		this.plMenu.add(btInters);
+		this.plMenu.add(btInterventions);
 		this.plMenu.add(btSalaries);
 		this.plMenu.add(btMateriaux);
 		this.plMenu.add(btContrats);
@@ -67,7 +67,7 @@ public class VueGenerale extends JFrame implements ActionListener
 		
 		//rendre les trois boutons cliquables
 		this.btClients.addActionListener(this);
-		this.btInters.addActionListener(this);
+		this.btInterventions.addActionListener(this);
 		this.btTechs.addActionListener(this);
 		this.btSalaries.addActionListener(this);
 		this.btMateriaux.addActionListener(this);
@@ -75,7 +75,7 @@ public class VueGenerale extends JFrame implements ActionListener
 		
 		//ajout des panels a la vue
 		this.add(this.uneVueClients);
-		this.add(this.uneVueInters);
+		this.add(this.uneVueInterventions);
 		this.add(this.uneVueTechs);
 		this.add(this.uneVueSalaries);
 		this.add(this.uneVueMateriaux);
@@ -92,7 +92,7 @@ public class VueGenerale extends JFrame implements ActionListener
 						break;
 		case "Clients" :
 					this.uneVueClients.setVisible(true);
-					this.uneVueInters.setVisible(false);
+					this.uneVueInterventions.setVisible(false);
 					this.uneVueTechs.setVisible(false);
 					this.uneVueSalaries.setVisible(false);
 					this.uneVueMateriaux.setVisible(false);
@@ -100,7 +100,7 @@ public class VueGenerale extends JFrame implements ActionListener
 					break;
 		case "Techniciens" :
 			this.uneVueClients.setVisible(false);
-			this.uneVueInters.setVisible(false);
+			this.uneVueInterventions.setVisible(false);
 			this.uneVueTechs.setVisible(true);
 			this.uneVueSalaries.setVisible(false);
 			this.uneVueMateriaux.setVisible(false);
@@ -108,7 +108,7 @@ public class VueGenerale extends JFrame implements ActionListener
 			break;
 		case "Interventions" :
 			this.uneVueClients.setVisible(false);
-			this.uneVueInters.setVisible(true);
+			this.uneVueInterventions.setVisible(true);
 			this.uneVueTechs.setVisible(false);
 			this.uneVueSalaries.setVisible(false);
 			this.uneVueMateriaux.setVisible(false);
@@ -116,7 +116,7 @@ public class VueGenerale extends JFrame implements ActionListener
 			break;
 		case "Salariés" :
 			this.uneVueClients.setVisible(false);
-			this.uneVueInters.setVisible(false);
+			this.uneVueInterventions.setVisible(false);
 			this.uneVueTechs.setVisible(false);
 			this.uneVueSalaries.setVisible(true);
 			this.uneVueMateriaux.setVisible(false);
@@ -124,7 +124,7 @@ public class VueGenerale extends JFrame implements ActionListener
 			break;
 		case "Matériaux" :
 			this.uneVueClients.setVisible(false);
-			this.uneVueInters.setVisible(false);
+			this.uneVueInterventions.setVisible(false);
 			this.uneVueTechs.setVisible(false);
 			this.uneVueSalaries.setVisible(false);
 			this.uneVueMateriaux.setVisible(true);
@@ -132,7 +132,7 @@ public class VueGenerale extends JFrame implements ActionListener
 			break;
 		case "Contrats" :
 			this.uneVueClients.setVisible(false);
-			this.uneVueInters.setVisible(false);
+			this.uneVueInterventions.setVisible(false);
 			this.uneVueTechs.setVisible(false);
 			this.uneVueSalaries.setVisible(false);
 			this.uneVueMateriaux.setVisible(false);

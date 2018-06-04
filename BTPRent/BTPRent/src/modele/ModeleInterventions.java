@@ -5,17 +5,20 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import controleur.Etat;
-import controleur.Salarie;
+import controleur.Materiel;
+import controleur.Intervention;
+import controleur.Technicien;
+import controleur.Intervention;
 
-public class ModeleInterventions {
-
-	
-	public static ArrayList<Salarie> selectAllSalarie ()
+public class ModeleInterventions
+{
+	public static ArrayList<Intervention> selectAllIntervention ()
 	{
-		ArrayList<Salarie> lesSalaries = new ArrayList<Salarie>();
-		String requete = "select ID_S, NOM_S, PRENOM_S, MAIL, mdp, droits from salarie ;";
-	
+		ArrayList<Intervention> lesInterventions = new ArrayList<Intervention>(); 
+		
+		String requete = "SELECT i.ID_I, t.NOMT, m.NOM_M, i.Date_debut, i.date_fin FROM INTERVENIR I" + 
+				" LEFT JOIN Technicien t ON t.IDT = i.IDT LEFT JOIN Materiel m ON m.ID_M = i.ID_M ;" ;
+		
 		BDD uneBdd = new BDD("localhost", "BTPRent", "root", "");
 		try
 		{
@@ -25,14 +28,13 @@ public class ModeleInterventions {
 			
 			while (unRes.next()) // tant qu'il y a un resultat
 			{
-				int idsalarie = unRes.getInt("ID_S");
-				String nom = unRes.getString("NOM_S");
-				String prenom = unRes.getString("PRENOM_S");
-				String mail = unRes.getString("MAIL");
-				String mdp = unRes.getString("mdp");
-				String droits = unRes.getString("droits");
-				Salarie unSalarie = new Salarie(idsalarie, nom, prenom, mail, mdp, droits); 
-				lesSalaries.add(unSalarie); 
+				int IdIntervention = unRes.getInt("i.ID_I");
+				String nomTechnicien = unRes.getString("t.NOMT");
+				String nomMateriel = unRes.getString("m.NOM_M");
+				String datedeb = unRes.getString("i.Date_debut");
+				String datefin = unRes.getString("i.Date_fin");
+				Intervention uneIntervention = new Intervention(IdIntervention, nomTechnicien, nomMateriel,  datedeb, datefin); 
+				lesInterventions.add(uneIntervention); 
 			}
 			unStat.close();
 			unRes.close();
@@ -42,16 +44,113 @@ public class ModeleInterventions {
 		{
 			System.out.println("Erreur : " + requete);
 		}
-		return lesSalaries;
+		return lesInterventions;
+	}
+	
+	public static void insertIntervention (Intervention uneIntervention) // Permet l'ajout d'une intervention
+	{																	 // Il est préférable d'ajouter une intervention en entrant l'ID du matériel car des matériaux ont le meme nom
+		String ReqIdTechnicien = "(select IDT from technicien where NOMT = '"+uneIntervention.getNomTechnicien()+"' )";
+		BDD uneBdd = new BDD("localhost", "BTPRent", "root", "");
+		try
+		{
+			uneBdd.seConnecter();
+			Statement unStat = uneBdd.getMaConnexion().createStatement();
+			unStat.execute(ReqIdTechnicien);
+			unStat.close();
+			uneBdd.seDeconnecter();
+		}
+		catch (SQLException exp)
+		{
+			System.out.println("Erreur : " + ReqIdTechnicien);
+		}
+		
+		
+		String requete = "insert into intervenir values (null, "+ReqIdTechnicien+","+uneIntervention.getIdMateriel()+",'"+uneIntervention.getDateDebut()+"','"+uneIntervention.getDateFin()+"') ;"; 
+		try
+		{
+			uneBdd.seConnecter();
+			Statement unStat = uneBdd.getMaConnexion().createStatement();
+			unStat.execute(requete);
+			unStat.close();
+			uneBdd.seDeconnecter();
+		}
+		catch (SQLException exp)
+		{
+			System.out.println("Erreur : " + requete);
+		}
+	}
+	
+	public static void updateIntervention (Intervention uneIntervention) 
+	{																			  
+		String ReqIdTechnicien = "(select IDT from technicien where NOMT = '"+uneIntervention.getNomTechnicien()+"' )";
+		BDD uneBdd = new BDD("localhost", "BTPRent", "root", "");
+		try
+		{
+			uneBdd.seConnecter();
+			Statement unStat = uneBdd.getMaConnexion().createStatement();
+			unStat.execute(ReqIdTechnicien);
+			unStat.close();
+			uneBdd.seDeconnecter();
+		}
+		catch (SQLException exp)
+		{
+			System.out.println("Erreur : " + ReqIdTechnicien);
+		}
+		
+		String requete = "update intervenir set IDT ="+ReqIdTechnicien+", ID_M ="+uneIntervention.getIdMateriel()+", Date_Debut ='"+uneIntervention.getDateDebut()+"', Date_Fin ='"+uneIntervention.getDateFin()+"' where ID_I = "+uneIntervention.getIdIntervention()+";";
+		try
+		{
+			uneBdd.seConnecter();
+			Statement unStat = uneBdd.getMaConnexion().createStatement();
+			unStat.execute(requete);
+			unStat.close();
+			uneBdd.seDeconnecter();
+		}
+		catch (SQLException exp)
+		{
+			System.out.println("Erreur : " + requete);
+		}
+	}
+	
+	public static void deleteIntervention (Intervention uneIntervention) //supprime une intervention par son ID
+	{
+		String requete = "delete from intervenir where ID_I =" +uneIntervention.getIdIntervention() +";";
+		BDD uneBdd = new BDD("localhost", "BTPRent", "root", "");
+		try
+		{
+			uneBdd.seConnecter();
+			Statement unStat = uneBdd.getMaConnexion().createStatement();
+			unStat.execute(requete);
+			unStat.close();
+			uneBdd.seDeconnecter();
+		}
+		catch (SQLException exp)
+		{
+			System.out.println("Erreur : " + requete);
+		}
 	}
 	
 	
-	
-	public static Salarie selectWhere (Salarie unSalarie)
+	public static Intervention selectWhere (Intervention uneIntervention) 
 	{
-		String requete = "select * from salarie where " + "nom_s = '" + unSalarie.getNom() + "' and prenom_s = '" + unSalarie.getPrenom()+ "' ; ";
-		Salarie leSalarie = null ;
-		BDD uneBdd = new BDD("localhost", "BTPRent", "root", "");
+		String ReqNomMateriel = "(select NOM_M FROM Materiel where ID_M = "+uneIntervention.getIdMateriel()+" )";   // cette requete permet d'obtenir le nom du matériel stocker dans la variable ReqNomMateriel Quand on connait l'ID du materiel pour l'afficher correctement dans le tableau après l'insertion d'une intervention 
+		BDD uneBdd = new BDD("localhost", "BTPRent", "root", "");  										  
+		try
+		{
+			uneBdd.seConnecter();
+			Statement unStat = uneBdd.getMaConnexion().createStatement();
+			unStat.execute(ReqNomMateriel);
+			unStat.close();
+			uneBdd.seDeconnecter();
+		}
+		catch (SQLException exp)
+		{
+			System.out.println("Erreur : " + ReqNomMateriel);
+		}
+		
+		String requete = "SELECT  ID_I, t.NOMT, m.NOM_M, i.Date_debut, i.date_fin FROM INTERVENIR I" + 
+				" LEFT JOIN Technicien t ON t.IDT = i.IDT LEFT JOIN Materiel m ON m.ID_M = i.ID_M where t.NOMT = '"+uneIntervention.getNomTechnicien()+"' AND m.NOM_M = '"+ReqNomMateriel+"' ;" ;
+		Intervention lIntervention = null ;
 		try
 		{
 			uneBdd.seConnecter();
@@ -59,8 +158,9 @@ public class ModeleInterventions {
 			ResultSet unRes = unStat.executeQuery(requete);
 			if(unRes.next())
 			{
-				int idsalarie = unRes.getInt("ID_S");
-				leSalarie = new Salarie(idsalarie, unSalarie.getNom(), unSalarie.getPrenom(), unSalarie.getMail(), unSalarie.getMdp(), unSalarie.getDroits());
+				int idIntervention = unRes.getInt("ID_I");
+				String nomMateriel = unRes.getString("m.NOM_M");
+				lIntervention = new Intervention(idIntervention, uneIntervention.getNomTechnicien(), nomMateriel, uneIntervention.getDateDebut(), uneIntervention.getDateFin());
 			}			
 			unStat.close();
 			uneBdd.seDeconnecter();;
@@ -71,40 +171,11 @@ public class ModeleInterventions {
 			System.out.println("Erreur " + requete);
 		}
 	
-		return leSalarie;
-	}
+		return lIntervention;
+	}	
 	
-	public static ArrayList<Etat> selectEtat ()  //vue etat
-	{
-		ArrayList<Etat> lesEtats = new ArrayList<Etat>();
-		String requete = "select NOM_C, NOMT, i.DATE_DEBUT, i.DATE_FIN, from INTERVENIR i LEFT JOIN (TECHNICIEN t, MATERIEL m) ON ( t.IDT = i.IDT AND m.ID_M = i.ID_M )"
-				+ " AND ;"; /* SELECT * FROM t1 LEFT JOIN (t2, t3, t4)
-                 ON (t2.a = t1.a AND t3.b = t1.b AND t4.c = t1.c) */
 	
-		BDD uneBdd = new BDD("localhost", "intervention", "root", "");
-		try
-		{
-			uneBdd.seConnecter();
-			Statement unStat = uneBdd.getMaConnexion().createStatement();
-			ResultSet unRes = unStat.executeQuery(requete);		
-			
-			while (unRes.next()) // tant qu'il y a un resultat
-			{
-				String nomC = unRes.getString("nomClient");
-				String nomT = unRes.getString("nomTechnicien");
-				String description = unRes.getString("description");
-				String dateInter = unRes.getString("dateInter");
-				Etat unEtat = new Etat(nomC, nomT ,description, dateInter); 
-				lesEtats.add(unEtat); 
-			}
-			unStat.close();
-			unRes.close();
-			uneBdd.seDeconnecter();
-		}		
-		catch (SQLException exp)
-		{
-			System.out.println("Erreur : " + requete);
-		}
-		return lesEtats;
-	}
-}
+	
+} 
+
+
