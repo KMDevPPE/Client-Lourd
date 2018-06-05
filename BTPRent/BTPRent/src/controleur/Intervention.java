@@ -7,38 +7,59 @@ public class Intervention
 	
 	public Intervention ()
 	{
-		IdIntervention = 0;
-		IdMateriel = 0;
-		nomTechnicien = "";
-		nomMateriel = "";
-		dateDebut = "";
-		dateFin = "";
+		this.IdIntervention = 0;
+		this.IdMateriel = 0;
+		this.nomTechnicien = "";
+		this.nomMateriel = "";
+		this.dateDebut = "";
+		this.dateFin = "";
+	}
+	
+	public Intervention (String nomM, String nomT, String dateD, String dateF)
+	{
+		this.IdIntervention = 0;
+		this.IdMateriel = 0;
+		this.nomMateriel = nomM;
+		this.nomTechnicien = nomT;
+		this.dateDebut = dateD;
+		this.dateFin = dateF;
 	}
 	
 	public Intervention (int IdM, String nomT, String dateD, String dateF)
 	{
-		IdIntervention = 0;
-		IdMateriel = IdM;
-		nomTechnicien = nomT;
-		dateDebut = dateD;
-		dateFin = dateF;
+		this.IdIntervention = 0;
+		this.IdMateriel = IdM;
+		this.nomTechnicien = nomT;
+		this.dateDebut = dateD;
+		this.dateFin = dateF;
 	}
 	public Intervention (int IdInter, int IdM, String nomT, String dateD, String dateF)
 	{
-		IdIntervention = IdInter;
-		IdMateriel = IdM;
-		nomTechnicien = nomT;
-		dateDebut = dateD;
-		dateFin = dateF;
+		this.IdIntervention = IdInter;
+		this.IdMateriel = IdM;
+		this.nomTechnicien = nomT;
+		this.dateDebut = dateD;
+		this.dateFin = dateF;
 	}
 	
-	public Intervention (int IdInter, String nomT, String nomM, String dateD, String dateF)
+	public Intervention (int IdM, String nomT, String nomM, String dateD, String dateF)
 	{
-		IdIntervention = IdInter;
-		nomTechnicien = nomT;
-		nomMateriel = nomM;
-		dateDebut = dateD;
-		dateFin = dateF;
+		this.IdIntervention = 0;
+		this.IdMateriel = IdM;
+		this.nomTechnicien = nomT;
+		this.nomMateriel = nomM;
+		this.dateDebut = dateD;
+		this.dateFin = dateF;
+	}
+	
+	public Intervention (int IdInter, int IdM, String nomT, String nomM, String dateD, String dateF)
+	{
+		this.IdIntervention = IdInter;
+		this.IdMateriel = IdM;
+		this.nomTechnicien = nomT;
+		this.nomMateriel = nomM;
+		this.dateDebut = dateD;
+		this.dateFin = dateF;
 	}
 	
 	public int getIdIntervention() {

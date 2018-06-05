@@ -5,10 +5,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import controleur.Materiel;
 import controleur.Intervention;
-import controleur.Technicien;
-import controleur.Intervention;
+
 
 public class ModeleInterventions
 {
@@ -33,7 +31,7 @@ public class ModeleInterventions
 				String nomMateriel = unRes.getString("m.NOM_M");
 				String datedeb = unRes.getString("i.Date_debut");
 				String datefin = unRes.getString("i.Date_fin");
-				Intervention uneIntervention = new Intervention(IdIntervention, nomTechnicien, nomMateriel,  datedeb, datefin); 
+				Intervention uneIntervention = new Intervention(IdIntervention, 0, nomTechnicien, nomMateriel,  datedeb, datefin); 
 				lesInterventions.add(uneIntervention); 
 			}
 			unStat.close();
@@ -133,23 +131,10 @@ public class ModeleInterventions
 	
 	public static Intervention selectWhere (Intervention uneIntervention) 
 	{
-		String ReqNomMateriel = "(select NOM_M FROM Materiel where ID_M = "+uneIntervention.getIdMateriel()+" )";   // cette requete permet d'obtenir le nom du matériel stocker dans la variable ReqNomMateriel Quand on connait l'ID du materiel pour l'afficher correctement dans le tableau après l'insertion d'une intervention 
-		BDD uneBdd = new BDD("localhost", "BTPRent", "root", "");  										  
-		try
-		{
-			uneBdd.seConnecter();
-			Statement unStat = uneBdd.getMaConnexion().createStatement();
-			unStat.execute(ReqNomMateriel);
-			unStat.close();
-			uneBdd.seDeconnecter();
-		}
-		catch (SQLException exp)
-		{
-			System.out.println("Erreur : " + ReqNomMateriel);
-		}
 		
 		String requete = "SELECT  ID_I, t.NOMT, m.NOM_M, i.Date_debut, i.date_fin FROM INTERVENIR I" + 
-				" LEFT JOIN Technicien t ON t.IDT = i.IDT LEFT JOIN Materiel m ON m.ID_M = i.ID_M where t.NOMT = '"+uneIntervention.getNomTechnicien()+"' AND m.NOM_M = '"+ReqNomMateriel+"' ;" ;
+				" LEFT JOIN Technicien t ON t.IDT = i.IDT LEFT JOIN Materiel m ON m.ID_M = i.ID_M where t.NOMT = '"+uneIntervention.getNomTechnicien()+"' AND m.NOM_M = '"+uneIntervention.getNomMateriel()+"' ;" ;
+		BDD uneBdd = new BDD("localhost", "BTPRent", "root", "");
 		Intervention lIntervention = null ;
 		try
 		{
@@ -159,8 +144,8 @@ public class ModeleInterventions
 			if(unRes.next())
 			{
 				int idIntervention = unRes.getInt("ID_I");
-				String nomMateriel = unRes.getString("m.NOM_M");
-				lIntervention = new Intervention(idIntervention, uneIntervention.getNomTechnicien(), nomMateriel, uneIntervention.getDateDebut(), uneIntervention.getDateFin());
+				lIntervention = new Intervention(idIntervention, 0, uneIntervention.getNomTechnicien(), uneIntervention.getNomMateriel(), uneIntervention.getDateDebut(), uneIntervention.getDateFin());
+				System.out.println(lIntervention.getNomMateriel());
 			}			
 			unStat.close();
 			uneBdd.seDeconnecter();;

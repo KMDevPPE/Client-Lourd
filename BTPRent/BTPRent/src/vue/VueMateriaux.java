@@ -41,9 +41,9 @@ public class VueMateriaux extends JPanel  implements ActionListener
 	private JTextField txtLieu = new JTextField();
 	private JTextField txtRue = new JTextField();
 	private JTextField txtCP = new JTextField();
-	private JTextField txtdateDeb = new JTextField();
-	private JTextField txtdateFin = new JTextField();
-	private JTextField txtLibelle = new JTextField();
+	private JTextField txtImage = new JTextField();
+	private JTextField txtStock = new JTextField();
+	private JTextField txtType = new JTextField();
 	
 	//récuperer la dimension de l'écran
 		Dimension tailleMoniteur = Toolkit.getDefaultToolkit().getScreenSize();
@@ -58,51 +58,54 @@ public class VueMateriaux extends JPanel  implements ActionListener
 		
 		JPanel unPanel = new JPanel ();
 		unPanel.setBounds(largeur/40, hauteur*2/3, largeur-(largeur/20), 120);
-		unPanel.setLayout(new GridLayout(5, 4));
+		unPanel.setLayout(new GridLayout(6, 4));
 		
 		 //premiere case vide
-		unPanel.add(new JLabel(""));
+		
 		unPanel.add(new JLabel("ID Materiel"));
 		unPanel.add(txtIdMateriel);
-		unPanel.add(new JLabel("")); 
 		
+		unPanel.add(new JLabel(""));
 		unPanel.add(new JLabel("Nom :"));
 		unPanel.add(this.txtNom);
 		
+		unPanel.add(new JLabel(""));
 		unPanel.add(new JLabel("Prix location/semaine : "));
 		unPanel.add(this.txtPrix);
 		
+		unPanel.add(new JLabel(""));
 		unPanel.add(new JLabel("Lieu : "));
 		unPanel.add(this.txtLieu);
 		
+		unPanel.add(new JLabel(""));
 		unPanel.add(new JLabel(" Code Postal : "));
 		unPanel.add(this.txtCP);
 		
+		unPanel.add(new JLabel(""));
 		unPanel.add(new JLabel(" Rue : "));
 		unPanel.add(this.txtRue);
 		
+		unPanel.add(new JLabel(""));
 		unPanel.add(new JLabel(" Type de matériel: "));
-		unPanel.add(this.txtLibelle);		
+		unPanel.add(this.txtType);		
 		
-		unPanel.add(new JLabel("")); 
+		unPanel.add(new JLabel(""));
 		unPanel.add(new JLabel(" Etat du matériel : "));
 		unPanel.add(this.txtEtat);
-		unPanel.add(new JLabel("")); 
+		
+		unPanel.add(new JLabel(""));
+		unPanel.add(new JLabel(" Adresse de l'image : "));
+		unPanel.add(this.txtImage); 
 		
 		unPanel.add(new JLabel("")); 
-		unPanel.add(new JLabel(" Début : "));
-		unPanel.add(this.txtdateDeb);
-		unPanel.add(new JLabel("")); 
+		unPanel.add(new JLabel(" Stock : "));
+		unPanel.add(this.txtStock);
+		unPanel.add(new JLabel(""));
 		
-		unPanel.add(new JLabel("")); 
-		unPanel.add(new JLabel(" Fin : "));
-		unPanel.add(this.txtdateFin);
-		unPanel.add(new JLabel("")); 
-		
+		unPanel.add(new JLabel(""));
 		unPanel.add(this.btAjouter);
 		unPanel.add(this.btSupprimer);
 		unPanel.add(this.btEditer);
-		unPanel.add(new JLabel(""));
 		this.txtIdMateriel.setEditable(false);
 		
 		unPanel.setVisible(true);
@@ -114,7 +117,7 @@ public class VueMateriaux extends JPanel  implements ActionListener
 		
 		
 		//construction de la JTable
-		String entete [] = {"ID Materiel", "Nom du materiel", "Prix de la location/semaine", "Lieu", "Code Postal", "Rue", "Type Materiel", "Etat", "Debut", "Fin"};
+		String entete [] = {"ID Materiel", "Nom du materiel", "Prix de la location/semaine", "Lieu", "Code Postal", "Rue", "Type Materiel", "Etat", "Stock", "Image"};
 		Object [][] lesDonnees = remplirDonnees ();
 		this.tableMateriaux = new JTable(lesDonnees, entete);
 		
@@ -156,15 +159,15 @@ public class VueMateriaux extends JPanel  implements ActionListener
 				int ligne = tableMateriaux.getSelectedRow();
 				txtIdMateriel.setText(tableMateriaux.getValueAt(ligne, 0).toString());
 				txtNom.setText(tableMateriaux.getValueAt(ligne, 1).toString());
-				txtLibelle.setText(tableMateriaux.getValueAt(ligne, 2).toString());
-				txtEtat.setText(tableMateriaux.getValueAt(ligne, 3).toString());
-				txtPrix.setText(tableMateriaux.getValueAt(ligne, 4).toString());
-				txtLieu.setText(tableMateriaux.getValueAt(ligne, 5).toString());
-				txtCP.setText(tableMateriaux.getValueAt(ligne, 6).toString());
-				txtRue.setText(tableMateriaux.getValueAt(ligne, 7).toString());
-				txtdateDeb.setText(tableMateriaux.getValueAt(ligne, 8).toString());
-				txtdateFin.setText(tableMateriaux.getValueAt(ligne, 9).toString());
-				
+				txtPrix.setText(tableMateriaux.getValueAt(ligne, 2).toString());
+				txtLieu.setText(tableMateriaux.getValueAt(ligne, 3).toString());
+				txtCP.setText(tableMateriaux.getValueAt(ligne, 4).toString());
+				txtRue.setText(tableMateriaux.getValueAt(ligne, 5).toString());
+				txtType.setText(tableMateriaux.getValueAt(ligne, 6).toString());
+				txtEtat.setText(tableMateriaux.getValueAt(ligne, 7).toString());
+				txtStock.setText(tableMateriaux.getValueAt(ligne, 8).toString());
+				txtImage.setText(tableMateriaux.getValueAt(ligne, 9).toString());
+				//"ID Materiel", "Nom du materiel", "Prix de la location/semaine", "Lieu", "Code Postal", "Rue", "Type Materiel", "Etat", "Stock", "Image"
 				
 			}
 		});
@@ -178,20 +181,20 @@ public class VueMateriaux extends JPanel  implements ActionListener
 	
 	private Object[][] remplirDonnees() {
 		ArrayList<Materiel> lesMateriaux = ModeleMateriaux.selectAllMateriel();
-		Object [][] lesDonnees = new Object[lesMateriaux.size()][6];
+		Object [][] lesDonnees = new Object[lesMateriaux.size()][10];
 		int i = 0;
 		for (Materiel unMateriel : lesMateriaux)
 		{
 			lesDonnees[i][0] = unMateriel.getIdMateriel() +"";
 			lesDonnees[i][1] = unMateriel.getNom();
-			lesDonnees[i][1] = unMateriel.getPrix();
-			lesDonnees[i][2] = unMateriel.getLieu();
-			lesDonnees[i][1] = unMateriel.getCp();
-			lesDonnees[i][1] = unMateriel.getRue();
-			lesDonnees[i][4] = unMateriel.getLibelle();
-			lesDonnees[i][1] = unMateriel.getNomEtat();
-			lesDonnees[i][1] = unMateriel.getDateDeb();
-			lesDonnees[i][1] = unMateriel.getDateFin();
+			lesDonnees[i][2] = unMateriel.getPrix();
+			lesDonnees[i][3] = unMateriel.getLieu();
+			lesDonnees[i][4] = unMateriel.getCp();
+			lesDonnees[i][5] = unMateriel.getRue();
+			lesDonnees[i][6] = unMateriel.getNomType();
+			lesDonnees[i][7] = unMateriel.getNomEtat();
+			lesDonnees[i][8] = unMateriel.getStock();
+			lesDonnees[i][9] = unMateriel.getImage();
 			
 			System.out.println(unMateriel.getNom());
 			i++;
@@ -206,78 +209,80 @@ public class VueMateriaux extends JPanel  implements ActionListener
 		
 		String nom = this.txtNom.getText();
 		String etat = this.txtEtat.getText();
-		String prixT = this.txtPrix.getText();
+		String prixM = this.txtPrix.getText();
 		String lieu = this.txtLieu.getText();
 		String cp = this.txtCP.getText();
 		String rue = this.txtRue.getText();
-		String libelle = this.txtLibelle.getText();
-		String dateDeb = this.txtdateDeb.getText();
-		String dateFin = this.txtdateFin.getText();
+		String type = this.txtType.getText();
+		String image = this.txtImage.getText();
+		String stockM = this.txtStock.getText();
 		
-		
-		float prix = Float.parseFloat(prixT);
+		int stock = Integer.parseInt(stockM);
+		float prix = Float.parseFloat(prixM);
 		
 		
 		switch (e.getActionCommand()) { 
 		case "Ajouter":
 		{
 				
-			if (nom.equals("") || etat.equals("") || prix == 0 || lieu.equals("") || libelle.equals("") || cp.equals("") || rue.equals("") )
+			if (nom.equals("") || etat.equals("") || prix == 0 || lieu.equals("") || type.equals("") || cp.equals("") || rue.equals("") || image.equals("") || stockM.equals("") )
 			{
-				JOptionPane.showMessageDialog(this, "Veuillez remplir les champs obligatoires");
+				JOptionPane.showMessageDialog(this, "Veuillez remplir tous les champs");
 			}
 			else
 			{
-				Materiel unMateriel = new Materiel (prix, nom, lieu, cp, rue, dateDeb, dateFin, etat, libelle);
+				Materiel unMateriel = new Materiel (prix, nom, lieu, cp, rue, stock, image, etat, type);
 				ModeleMateriaux.insertMateriel(unMateriel);
 				JOptionPane.showMessageDialog(this, "Materiel inséré avec succès");
 				// mise a jour de la Jtable
 				Materiel leMateriel = ModeleMateriaux.selectWhere(unMateriel);
 				
-				Object ligne [] = {leMateriel.getPrix(),leMateriel.getNom(), leMateriel.getLieu(), leMateriel.getCp(), leMateriel.getRue(),leMateriel.getDateDeb(),leMateriel.getDateFin(),leMateriel.getNomEtat(),leMateriel.getLibelle()};
+				Object ligne [] = {leMateriel.getIdMateriel(), leMateriel.getNom(),leMateriel.getPrix(), leMateriel.getLieu(), leMateriel.getCp(), leMateriel.getRue(),leMateriel.getNomType(),leMateriel.getNomEtat(),leMateriel.getStock(),leMateriel.getImage()};
 				
 				
 				//appel de la methode pour ajouter cette ligne dans la tablea
 				unTableau.add(ligne);
 				
+				this.txtIdMateriel.setText("");
 				this.txtPrix.setText("");
 				this.txtNom.setText("");
 				this.txtLieu.setText("");
 				this.txtCP.setText("");
 				this.txtRue.setText("");
-				this.txtdateDeb.setText("");
-				this.txtdateFin.setText("");
+				this.txtImage.setText("");
+				this.txtStock.setText("");
 				this.txtEtat.setText("");
-				this.txtLibelle.setText("");
+				this.txtType.setText("");
 			}
 		}
 			break;
 		case "Supprimer":
 		{			
 			
-			if (nom.equals("") || etat.equals("") || prix == 0 || lieu.equals("") || libelle.equals("") || cp.equals("") || rue.equals(""))
+			if (nom.equals("") || etat.equals("") || prix == 0 || lieu.equals("") || type.equals("") || cp.equals("") || rue.equals(""))
 			{
 				JOptionPane.showMessageDialog(this, "Veuillez sélectionner un materiel");
 			}
 			else
 			{
 				int idMateriel = Integer.parseInt(txtIdMateriel.getText());
-				Materiel unMateriel = new Materiel(idMateriel, nom, "", "", "", "","","","");
+				Materiel unMateriel = new Materiel(idMateriel, 0, nom, "", "", "", 0,"","","");
 				ModeleMateriaux.deleteMateriel(unMateriel);
 				JOptionPane.showMessageDialog(this, "Suppression réussie");
 				
 				int rowIndex = this.tableMateriaux.getSelectedRow();
 				unTableau.delete(rowIndex);
 				
+				this.txtIdMateriel.setText("");
 				this.txtPrix.setText("");
 				this.txtNom.setText("");
 				this.txtLieu.setText("");
 				this.txtCP.setText("");
 				this.txtRue.setText("");
-				this.txtdateDeb.setText("");
-				this.txtdateFin.setText("");
+				this.txtImage.setText("");
+				this.txtStock.setText("");
 				this.txtEtat.setText("");
-				this.txtLibelle.setText("");
+				this.txtType.setText("");
 			}				
 				
 		}
@@ -285,31 +290,32 @@ public class VueMateriaux extends JPanel  implements ActionListener
 		case "Editer":
 		{
 			
-			if (nom.equals("") || etat.equals("") || prix == 0 || lieu.equals("") || libelle.equals("") || cp.equals("") || rue.equals(""))
+			if (nom.equals("") || etat.equals("") || prix == 0 || lieu.equals("") || type.equals("") || cp.equals("") || rue.equals(""))
 			{
 				JOptionPane.showMessageDialog(this, "Veuillez sélectionner un materiel");
 			}
 			else
 			{
 				int idMateriel = Integer.parseInt(txtIdMateriel.getText());			
-				Materiel unMateriel = new Materiel(prix, nom, lieu, cp, rue, dateDeb, dateFin, etat, libelle);
+				Materiel unMateriel = new Materiel(prix, nom, lieu, cp, rue, stock, image, etat, type);
 				ModeleMateriaux.updateMateriel(unMateriel);
 				JOptionPane.showMessageDialog(this, "Mise à jour réussie");
 				
-				Object ligne [] = {unMateriel.getPrix(),unMateriel.getNom(), unMateriel.getLieu(), unMateriel.getCp(), unMateriel.getRue(),unMateriel.getDateDeb(),unMateriel.getDateFin(),unMateriel.getNomEtat(),unMateriel.getLibelle()};
+				Object ligne [] = {unMateriel.getPrix(),unMateriel.getNom(), unMateriel.getLieu(), unMateriel.getCp(), unMateriel.getRue(),unMateriel.getStock(),unMateriel.getImage(),unMateriel.getNomEtat(),unMateriel.getNomType()};
 				
 				int rowIndex = this.tableMateriaux.getSelectedRow();
 				unTableau.update(rowIndex, ligne);
 				
+				this.txtIdMateriel.setText("");
 				this.txtPrix.setText("");
 				this.txtNom.setText("");
 				this.txtLieu.setText("");
 				this.txtCP.setText("");
 				this.txtRue.setText("");
-				this.txtdateDeb.setText("");
-				this.txtdateFin.setText("");
+				this.txtImage.setText("");
+				this.txtStock.setText("");
 				this.txtEtat.setText("");
-				this.txtLibelle.setText("");						
+				this.txtType.setText("");						
 			}			
 		}			
 	}

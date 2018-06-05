@@ -3,15 +3,15 @@ package controleur;
 public class Materiel { 
 	
 		
-		private int idMateriel, idLocalisation , idType, idEtat;
+		private int idMateriel, idLocalisation , idType, idEtat, stock;
 		private String nom;
 		private float prix;
 		// variables localisation
-		String lieu, cp, rue, dateDeb, dateFin;
-		//variables etat
+		String lieu, cp, rue, image;
+		//variable etat
 		String nomEtat;
-		//variables type
-		String libelle;
+		//variable type
+		String nomType;
 		
 		public Materiel ()
 		{
@@ -24,15 +24,15 @@ public class Materiel {
 			this.lieu = "";
 			this.cp = "";
 			this.rue = "";
-			this.dateDeb = "";
-			this.dateFin = "";
+			this.stock = 0;
+			this.image = "";
 			this.nomEtat = "";
-			this.libelle = "";
+			this.nomType = "";
 			
 		}
 		
 		public Materiel ( int idLocalisation, int idType, int idEtat, float prix, String nom,
-				String lieu, String cp, String rue, String dateDeb, String dateFin, String nomEtat, String libelle)
+				String lieu, String cp, String rue, int stock, String image, String nomEtat, String nomType)
 		{
 			this.idMateriel = 0;			
 			this.idLocalisation = idLocalisation;
@@ -43,14 +43,14 @@ public class Materiel {
 			this.lieu = lieu;
 			this.cp = cp;
 			this.rue = rue;
-			this.dateDeb = dateDeb;
-			this.dateFin = dateFin;
+			this.stock = stock;
+			this.image = image;
 			this.nomEtat = nomEtat;
-			this.libelle = libelle;
+			this.nomType = nomType;
 			
 		}
 		
-		public Materiel (int idMateriel, float prix, String nom, String lieu, String cp, String rue, String dateDeb, String dateFin, String nomEtat, String libelle)
+		public Materiel (int idMateriel, float prix, String nom, String lieu, String cp, String rue, int stock, String image, String nomEtat, String nomType)
 		{
 			this.idMateriel = idMateriel;			
 			this.idLocalisation = 0;
@@ -61,13 +61,13 @@ public class Materiel {
 			this.lieu = lieu;
 			this.cp = cp;
 			this.rue = rue;
-			this.dateDeb = dateDeb;
-			this.dateFin = dateFin;
+			this.stock = stock;
+			this.image = image;
 			this.nomEtat = nomEtat;
-			this.libelle = libelle;
+			this.nomType = nomType;
 		}
 		
-		public Materiel (float prix, String nom, String lieu, String cp, String rue, String dateDeb, String dateFin, String nomEtat, String libelle)
+		public Materiel (float prix, String nom, String lieu, String cp, String rue, int stock, String image, String nomEtat, String nomType)
 		{
 			this.idMateriel = 0;			
 			this.idLocalisation = 0;
@@ -78,10 +78,10 @@ public class Materiel {
 			this.lieu = lieu;
 			this.cp = cp;
 			this.rue = rue;
-			this.dateDeb = dateDeb;
-			this.dateFin = dateFin;
+			this.stock = stock;
+			this.image = image;
 			this.nomEtat = nomEtat;
-			this.libelle = libelle;
+			this.nomType = nomType;
 		}
 		
 		public Materiel (String nom)
@@ -95,12 +95,13 @@ public class Materiel {
 			this.lieu = "" ;
 			this.cp = "";
 			this.rue = "";
-			this.dateDeb = "";
-			this.dateFin = "";
+			this.stock = 0;
+			this.image = "";
 			this.nomEtat = "";
-			this.libelle = "";
+			this.nomType = "";
 			
 		}
+		
 
 		public int getIdMateriel() {
 			return idMateriel;
@@ -174,20 +175,20 @@ public class Materiel {
 			this.rue = rue;
 		}
 
-		public String getDateDeb() {
-			return dateDeb;
+		public int getStock() {
+			return stock;
 		}
 
-		public void setDateDeb(String dateDeb) {
-			this.dateDeb = dateDeb;
+		public void setStock(int stock) {
+			this.stock = stock;
 		}
 
-		public String getDateFin() {
-			return dateFin;
+		public String getImage() {
+			return image;
 		}
 
-		public void setDateFin(String dateFin) {
-			this.dateFin = dateFin;
+		public void setImage(String image) {
+			this.image = image;
 		}
 
 		public String getNomEtat() {
@@ -198,12 +199,12 @@ public class Materiel {
 			this.nomEtat = nomEtat;
 		}
 
-		public String getLibelle() {
-			return libelle;
+		public String getNomType() {
+			return nomType;
 		}
 
-		public void setLibelle(String libelle) {
-			this.libelle = libelle;
+		public void setNomType(String nomType) {
+			this.nomType = nomType;
 		}
 
 		

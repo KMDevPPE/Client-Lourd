@@ -169,18 +169,18 @@ public class VueInterventions extends JPanel implements ActionListener
 				case "Ajouter":
 				{
 					String nomTechnicien = this.txtNomTechnicien.getText();
-					String txtMateriel = this.txtIdMateriel.getText();
-					int idMateriel = Integer.parseInt(this.txtIdMateriel.getText());
+					String nomMateriel = this.txtIdMateriel.getText();
 					String DateDeb = this.txtDateDeb.getText();
 					String DateFin = this.txtDateFin.getText();
-					if (nomTechnicien.equals("") || txtMateriel.equals(""))
+					int idMateriel = Integer.parseInt(nomMateriel);
+					if (nomTechnicien.equals("") || nomMateriel.equals(""))
 					{
 						JOptionPane.showMessageDialog(this, "Veuillez entrer un nom de Technicien et l'ID du matériel en question");
 					}
 					else
 					{
 						
-						Intervention uneIntervention = new Intervention (idMateriel, nomTechnicien, DateDeb, DateFin);
+						Intervention uneIntervention = new Intervention (idMateriel, nomTechnicien, nomMateriel, DateDeb, DateFin);
 						ModeleInterventions.insertIntervention(uneIntervention);
 						JOptionPane.showMessageDialog(this, "Intervention insérée avec succès");
 						// mise a jour de la Jtable
@@ -191,7 +191,7 @@ public class VueInterventions extends JPanel implements ActionListener
 						
 						//appel de la methode pour ajouter cette ligne dans la tableau
 						unTableau.add(ligne);
-						
+						System.out.println(lIntervention.getNomMateriel());
 						this.txtIdIntervention.setText("");
 						this.txtNomTechnicien.setText("");
 						this.txtIdMateriel.setText("");
