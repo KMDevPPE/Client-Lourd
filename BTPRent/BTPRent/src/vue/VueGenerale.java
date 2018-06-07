@@ -7,6 +7,7 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -82,6 +83,10 @@ public class VueGenerale extends JFrame implements ActionListener
 		this.add(this.uneVueContrats);
 		
 		this.setVisible(true);
+		
+		//changer l'icone de l'application
+		ImageIcon petitLogo = new ImageIcon("src/image/petit logo.jpg");
+		this.setIconImage(petitLogo.getImage());
 	}
 
 	@Override

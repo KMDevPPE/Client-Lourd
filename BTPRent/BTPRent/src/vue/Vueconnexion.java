@@ -32,7 +32,7 @@ public class Vueconnexion extends JFrame implements ActionListener, KeyListener
 	public Vueconnexion() 
 	{	
 		Font uneFont = new Font("Helvetica", Font.BOLD, 20);//INSTANCIATION DE LA POLICE
-		this.setTitle("Logiciel de gestion des locations"); //titre de la fenetre
+		this.setTitle("BTPRentGestion des locations"); //titre de la fenetre
 		this.setBounds(400, 200, 1000, 600);
 		this.setLayout(null); //pas de layout par defaut
 		this.setResizable(false); //ne pas l'agrandir
