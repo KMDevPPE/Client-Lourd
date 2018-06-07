@@ -6,20 +6,14 @@ import java.sql.SQLException;
 
 public class BDD 
 {
-	private String serveur, bdd, user, mdp;
-	private Connection maConnexion;
+	private static String serveur = "192.168.8.228", bdd ="BTPRent", user="yanis", mdp="yanis";
+	private static Connection maConnexion =null;
 	
-	public BDD(String serveur, String bdd, String user, String mdp)
-	{
-		this.serveur = serveur;
-		this.bdd = bdd;
-		this.user = user;
-		this.mdp = mdp;
-		this.maConnexion = null;
-		
-	}
+	private static BDD uneBDD ;
 	
-	public void chargerPilote ()
+	 
+	
+	public static void chargerPilote ()
 	{
 		//verification de la presence du pilote JDBC
 		try
@@ -31,36 +25,39 @@ public class BDD
 			System.out.println("Absence du pilote JDBC");
 		}
 	}
-	public void seConnecter ()
+	public static  void seConnecter ()
 	{
 		//methode de connexion au serveur et la bdd
-		String url = "jdbc:mysql://" + this.serveur+"/"+this.bdd;
+		String url = "jdbc:mysql://" + serveur+"/"+bdd;
 		try
 		{
-			this.maConnexion = DriverManager.getConnection(url, this.user, this.mdp);
+			if (maConnexion ==null) {
+				maConnexion = DriverManager.getConnection(url, user, mdp);
+			}
 		}
 		catch (SQLException exp)
 		{
 			System.out.println("Erreur de connexion a : "+ url);
 		}
 	}
-	public void seDeconnecter ()
+	public  static void seDeconnecter ()
 	{
 		// methode de deconnexion de la BDD
 		try{
-				if (this.maConnexion != null)
+				if (maConnexion != null)
 			{
-				this.maConnexion.close();
+				maConnexion.close();
+				maConnexion = null;
 			}
 		}catch (SQLException exp)
 		{
 			System.out.println("Erreur de fermeture de la connexion");
 		}		
 	}
-	public Connection getMaConnexion ()
+	public static  Connection getMaConnexion ()
 	{
 		// getter sur la variable connexion
-		return this.maConnexion;
+		return maConnexion;
 	}
 
 }

@@ -13,14 +13,14 @@ public class ModeleMateriaux extends Modele
 	public static void insertMateriel (Materiel unMateriel) 
 	{
 		String requete = "call PInsMat ('"+unMateriel.getNom()+"',"+unMateriel.getPrix()+",'"+unMateriel.getLieu()+"','"+unMateriel.getCp()+"','"+unMateriel.getRue()+"','"+unMateriel.getImage()+"',"+unMateriel.getStock()+",'"+unMateriel.getNomType()+"','"+unMateriel.getNomEtat()+"');";
-		BDD uneBdd = new BDD("localhost", "BTPRent", "root", "");
+		
 		try
 		{
-			uneBdd.seConnecter();
-			Statement unStat = uneBdd.getMaConnexion().createStatement();
+			BDD.seConnecter();
+			Statement unStat = BDD.getMaConnexion().createStatement();
 			unStat.execute(requete);
 			unStat.close();
-			uneBdd.seDeconnecter();
+			BDD.seDeconnecter();
 		}
 		catch (SQLException exp)
 		{
@@ -37,16 +37,16 @@ public class ModeleMateriaux extends Modele
 				" and m.id_type = t.id_type" +
 				" and m.id_etat = e.id_etat ;"; */
 		String requete = "select m.id_m, m.nom_M, m.prix_m, m.image_m, m.stock_m, t.libelle, e.nom_etat, l.lieux, l.cp, l.rue_c " +
-				" from materiel m LEFT JOIN type_materiel t ON m.id_type = t.id_type "
-				+ " LEFT JOIN localisation l ON m.id_localisation = l.id_localisation "
-				+ " LEFT JOIN etat e ON m.id_etat = e.id_etat ;"; 
+				" from MATERIEL m LEFT JOIN TYPE_MATERIEL t ON m.id_type = t.id_type "
+				+ " LEFT JOIN LOCALISATION l ON m.id_localisation = l.id_localisation "
+				+ " LEFT JOIN ETAT e ON m.id_etat = e.id_etat ;"; 
 	// select m.id_m, m.nom_M, m.prix_m, m.image_m, m.stock_m, t.libelle, e.nom_etat, l.lieux, l.cp, l.rue_c from materiel m LEFT JOIN type_materiel t ON m.id_type = t.id_type  LEFT JOIN localisation l ON m.id_localisation = l.id_localisation LEFT JOIN etat e ON m.id_etat = e.id_etat ;	
 	
-		BDD uneBdd = new BDD("localhost", "BTPRent", "root", "");
+		
 		try
 		{
-			uneBdd.seConnecter();
-			Statement unStat = uneBdd.getMaConnexion().createStatement();
+			BDD.seConnecter();
+			Statement unStat = BDD.getMaConnexion().createStatement();
 			ResultSet unRes = unStat.executeQuery(requete);		
 			
 			while (unRes.next()) // tant qu'il y a un resultat
@@ -67,7 +67,7 @@ public class ModeleMateriaux extends Modele
 			}
 			unStat.close();
 			unRes.close();
-			uneBdd.seDeconnecter();
+			BDD.seDeconnecter();
 		}		
 		catch (SQLException exp)
 		{
@@ -79,15 +79,15 @@ public class ModeleMateriaux extends Modele
 	
 	public static void deleteMateriel (Materiel unMateriel)
 	{
-		String requete = "delete from materiel where ID_M =" +unMateriel.getIdMateriel() +";";
-		BDD uneBdd = new BDD("localhost", "BTPRent", "root", "");
+		String requete = "delete from MATERIEL where ID_M =" +unMateriel.getIdMateriel() +";";
+		
 		try
 		{
-			uneBdd.seConnecter();
-			Statement unStat = uneBdd.getMaConnexion().createStatement();
+			BDD.seConnecter();
+			Statement unStat = BDD.getMaConnexion().createStatement();
 			unStat.execute(requete);
 			unStat.close();
-			uneBdd.seDeconnecter();
+			BDD.seDeconnecter();
 		}
 		catch (SQLException exp)
 		{
@@ -98,15 +98,15 @@ public class ModeleMateriaux extends Modele
 	public static void updateMateriel (Materiel unMateriel)
 	{
 		
-		String requete = "update materiel set stock_ m ="+unMateriel.getStock()+", image_m='"+unMateriel.getImage()+"' ,nom_m ='"+unMateriel.getNom() +"' , prix_m ="+unMateriel.getPrix()+"  where ID_M = " + unMateriel.getIdMateriel() +" ;";
-		BDD uneBdd = new BDD("localhost", "BTPRent", "root", "");
+		String requete = "update MATERIEL set stock_ m ="+unMateriel.getStock()+", image_m='"+unMateriel.getImage()+"' ,nom_m ='"+unMateriel.getNom() +"' , prix_m ="+unMateriel.getPrix()+"  where ID_M = " + unMateriel.getIdMateriel() +" ;";
+		
 		try
 		{
-			uneBdd.seConnecter();
-			Statement unStat = uneBdd.getMaConnexion().createStatement();
+			BDD.seConnecter();
+			Statement unStat = BDD.getMaConnexion().createStatement();
 			unStat.execute(requete);
 			unStat.close();
-			uneBdd.seDeconnecter();
+			BDD.seDeconnecter();
 		}
 		catch (SQLException exp)
 		{
@@ -117,13 +117,13 @@ public class ModeleMateriaux extends Modele
 	
 	public static Materiel selectWhere (Materiel unMateriel)
 	{
-		String requete = "select * from materiel M LEFT JOIN localisation l ON l.ID_LOCALISATION = m.ID_LOCALISATION where " + "M.nom_m = '" + unMateriel.getNom() + "' and M.stock_m = '"+unMateriel.getStock()+"' and l.lieux = '"+unMateriel.getLieu()+"'; ";
+		String requete = "select * from MATERIEL M LEFT JOIN LOCALISATION l ON l.ID_LOCALISATION = m.ID_LOCALISATION where " + "M.nom_m = '" + unMateriel.getNom() + "' and M.stock_m = '"+unMateriel.getStock()+"' and l.lieux = '"+unMateriel.getLieu()+"'; ";
 		Materiel leMateriel = null ;
-		BDD uneBdd = new BDD("localhost", "BTPRent", "root", "");
+		
 		try
 		{
-			uneBdd.seConnecter();
-			Statement unStat = uneBdd.getMaConnexion().createStatement();
+			BDD.seConnecter();
+			Statement unStat = BDD.getMaConnexion().createStatement();
 			ResultSet unRes = unStat.executeQuery(requete);
 			if(unRes.next())
 			{
@@ -131,7 +131,7 @@ public class ModeleMateriaux extends Modele
 				leMateriel = new Materiel(idmateriel,unMateriel.getPrix(),unMateriel.getNom(), unMateriel.getLieu(), unMateriel.getCp(), unMateriel.getRue(), unMateriel.getStock(), unMateriel.getImage(), unMateriel.getNomEtat(), unMateriel.getNomType()); 
 			}			
 			unStat.close();
-			uneBdd.seDeconnecter();;
+			BDD.seDeconnecter();;
 			unRes.close();
 		}
 		catch (SQLException exp)

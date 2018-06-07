@@ -15,18 +15,18 @@ public class ModeleClients
 //------------------INSERT ENTREPRISES --------------------------------------------
 	public static void insertEntreprise (Entreprise uneEntreprise) 
 	{
-		String requete = "insert into entreprise (id_C,nom_c,prenom_c,ville_c,cp_c,rue_c,telephone,mail,mdp, raison, domaine, siret) values (null , '" + uneEntreprise.getNom()+"' , '" + uneEntreprise.getPrenom() + "',"
+		String requete = "insert into ENTREPRISE (id_C,nom_c,prenom_c,ville_c,cp_c,rue_c,telephone,mail,mdp, raison, domaine, siret) values (null , '" + uneEntreprise.getNom()+"' , '" + uneEntreprise.getPrenom() + "',"
 				+ " '" + uneEntreprise.getVille()+"' , '" + uneEntreprise.getCp()+"' , '" + uneEntreprise.getRue()+"' , '" + uneEntreprise.getTel()+"' , '" + uneEntreprise.getMail()+"' , "
 						+ "'" + uneEntreprise.getMdp()+"' , '" + uneEntreprise.getRaison()+"' , '" + uneEntreprise.getDomaine()+"' , '" + uneEntreprise.getSiret()+"');";
 		
-		BDD uneBdd = new BDD("localhost", "BTPRent", "root", "");
+		 
 		try
 		{
-			uneBdd.seConnecter();
-			Statement unStat = uneBdd.getMaConnexion().createStatement();
+			BDD.seConnecter();
+			Statement unStat = BDD.getMaConnexion().createStatement();
 			unStat.execute(requete);
 			unStat.close();
-			uneBdd.seDeconnecter();
+			BDD.seDeconnecter();
 		}
 		catch (SQLException exp)
 		{
@@ -36,18 +36,18 @@ public class ModeleClients
 	//------------------INSERT  PARTICULIERS--------------------------------------------	
 	public static void insertParticulier (Particulier unParti) 
 	{
-		String requete = "insert into particulier (id_C,datenaiss,nom_c,prenom_c,ville_c,cp_c,rue_c,telephone,mail,mdp) values (null , '" + unParti.getDatenaiss()+"',"
+		String requete = "insert into PARTICULIER (id_C,datenaiss,nom_c,prenom_c,ville_c,cp_c,rue_c,telephone,mail,mdp) values (null , '" + unParti.getDatenaiss()+"',"
 				+ "'" + unParti.getNom()+"' , '" + unParti.getPrenom() + "', '" + unParti.getVille()+"' , '" + unParti.getCp()+"' , '" + unParti.getRue()+"' "
 						+ ", '" + unParti.getTel()+"' , '" + unParti.getMail()+"' , '" + unParti.getMdp()+"');";
 		
-		BDD uneBdd = new BDD("localhost", "BTPRent", "root", "");
+		
 		try
 		{
-			uneBdd.seConnecter();
-			Statement unStat = uneBdd.getMaConnexion().createStatement();
+			BDD.seConnecter();
+			Statement unStat = BDD.getMaConnexion().createStatement();
 			unStat.execute(requete);
 			unStat.close();
-			uneBdd.seDeconnecter();
+			BDD.seDeconnecter();
 		}
 		catch (SQLException exp)
 		{
@@ -58,13 +58,13 @@ public class ModeleClients
 	public static ArrayList<Client> selectAllClients ()
 	{
 		ArrayList<Client> lesClients = new ArrayList<Client>();
-		String requete = "select * from client ;";
+		String requete = "select * from CLIENT ;";
 	
-		BDD uneBdd = new BDD("localhost", "BTPRent", "root", "");
+		
 		try
 		{
-			uneBdd.seConnecter();
-			Statement unStat = uneBdd.getMaConnexion().createStatement();
+			BDD.seConnecter();
+			Statement unStat = BDD.getMaConnexion().createStatement();
 			ResultSet unRes = unStat.executeQuery(requete);		
 			
 			while (unRes.next()) // tant qu'il y a un resultat
@@ -83,7 +83,7 @@ public class ModeleClients
 			}
 			unStat.close();
 			unRes.close();
-			uneBdd.seDeconnecter();
+			BDD.seDeconnecter();
 		}		
 		catch (SQLException exp)
 		{
@@ -95,13 +95,13 @@ public class ModeleClients
 	public static ArrayList<Entreprise> selectAllEntreprises ()
 	{
 		ArrayList<Entreprise> lesEntreprises = new ArrayList<Entreprise>();
-		String requete = "select * from entreprise ;";
+		String requete = "select * from ENTREPRISE ;";
 	
-		BDD uneBdd = new BDD("localhost", "BTPRent", "root", "");
+		
 		try
 		{
-			uneBdd.seConnecter();
-			Statement unStat = uneBdd.getMaConnexion().createStatement();
+			BDD.seConnecter();
+			Statement unStat = BDD.getMaConnexion().createStatement();
 			ResultSet unRes = unStat.executeQuery(requete);		
 		
 			while (unRes.next()) // tant qu'il y a un resultat
@@ -123,7 +123,7 @@ public class ModeleClients
 			}
 			unStat.close();
 			unRes.close();
-			uneBdd.seDeconnecter();
+			BDD.seDeconnecter();
 		}		
 		catch (SQLException exp)
 		{
@@ -135,13 +135,13 @@ public class ModeleClients
 	public static ArrayList<Particulier> selectAllParticuliers ()
 	{
 		ArrayList<Particulier> lesParticuliers = new ArrayList<Particulier>();
-		String requete =  "select * from particulier ;";
+		String requete =  "select * from PARTICULIER ;";
 	
-		BDD uneBdd = new BDD("localhost", "BTPRent", "root", "");
+		
 		try
 		{
-			uneBdd.seConnecter();
-			Statement unStat = uneBdd.getMaConnexion().createStatement();
+			BDD.seConnecter();
+			Statement unStat = BDD.getMaConnexion().createStatement();
 			ResultSet unRes = unStat.executeQuery(requete);		
 		
 			while (unRes.next()) // tant qu'il y a un resultat
@@ -161,7 +161,7 @@ public class ModeleClients
 			}
 			unStat.close();
 			unRes.close();
-			uneBdd.seDeconnecter();
+			BDD.seDeconnecter();
 		}		
 		catch (SQLException exp)
 		{
@@ -176,15 +176,15 @@ public class ModeleClients
 	
 	public static void deleteClient (Client unClient)
 	{
-		String requete = "delete from client where ID_C =" +unClient.getIdclient() +";";
-		BDD uneBdd = new BDD("localhost", "BTPRent", "root", "");
+		String requete = "delete from CLIENT where ID_C =" +unClient.getIdclient() +";";
+		
 		try
 		{
-			uneBdd.seConnecter();
-			Statement unStat = uneBdd.getMaConnexion().createStatement();
+			BDD.seConnecter();
+			Statement unStat = BDD.getMaConnexion().createStatement();
 			unStat.execute(requete);
 			unStat.close();
-			uneBdd.seDeconnecter();
+			BDD.seDeconnecter();
 		}
 		catch (SQLException exp)
 		{
@@ -194,15 +194,15 @@ public class ModeleClients
 	
 	public static void deleteEntreprise (Entreprise uneEntreprise)
 	{
-		String requete = "delete from entreprise where ID_C =" +uneEntreprise.getIdclient() +";";
-		BDD uneBdd = new BDD("localhost", "BTPRent", "root", "");
+		String requete = "delete from ENTREPRISE where ID_C =" +uneEntreprise.getIdclient() +";";
+		
 		try
 		{
-			uneBdd.seConnecter();
-			Statement unStat = uneBdd.getMaConnexion().createStatement();
+			BDD.seConnecter();
+			Statement unStat = BDD.getMaConnexion().createStatement();
 			unStat.execute(requete);
 			unStat.close();
-			uneBdd.seDeconnecter();
+			BDD.seDeconnecter();
 		}
 		catch (SQLException exp)
 		{
@@ -212,15 +212,15 @@ public class ModeleClients
 	
 	public static void deleteParticulier (Particulier unParticulier)
 	{
-		String requete = "delete from Particulier where ID_C =" +unParticulier.getIdclient() +";";
-		BDD uneBdd = new BDD("localhost", "BTPRent", "root", "");
+		String requete = "delete from PARTICULIER where ID_C =" +unParticulier.getIdclient() +";";
+		
 		try
 		{
-			uneBdd.seConnecter();
-			Statement unStat = uneBdd.getMaConnexion().createStatement();
+			BDD.seConnecter();
+			Statement unStat = BDD.getMaConnexion().createStatement();
 			unStat.execute(requete);
 			unStat.close();
-			uneBdd.seDeconnecter();
+			BDD.seDeconnecter();
 		}
 		catch (SQLException exp)
 		{
@@ -231,15 +231,15 @@ public class ModeleClients
 	//-------------------------MODIFIER CLIENT ------------------------------------------
 	public static void updateClient (Client unClient)
 	{
-		String requete = "update client set mail ='" + unClient.getNom() + "',adresse='" +unClient.getAdresse() + "' where ID_C = " + unClient.getIdclient() +";";
-		BDD uneBdd = new BDD("localhost", "BTPRent", "root", "");
+		String requete = "update CLIENT set mail ='" + unClient.getNom() + "',adresse='" +unClient.getAdresse() + "' where ID_C = " + unClient.getIdclient() +";";
+		
 		try
 		{
-			uneBdd.seConnecter();
-			Statement unStat = uneBdd.getMaConnexion().createStatement();
+			BDD.seConnecter();
+			Statement unStat = BDD.getMaConnexion().createStatement();
 			unStat.execute(requete);
 			unStat.close();
-			uneBdd.seDeconnecter();
+			BDD.seDeconnecter();
 		}
 		catch (SQLException exp)
 		{
@@ -249,19 +249,19 @@ public class ModeleClients
 	
 	public static void updateEntreprise (Entreprise uneEntreprise)
 	{
-		String requete = "update entreprise set nom_c ='" + uneEntreprise.getNom() + "', prenom_c ='" +uneEntreprise.getPrenom() + 
+		String requete = "update ENTREPRISE set nom_c ='" + uneEntreprise.getNom() + "', prenom_c ='" +uneEntreprise.getPrenom() + 
 				"', ville_c ='" +uneEntreprise.getVille() + "', cp_c ='" +uneEntreprise.getCp() + 
 				"', rue_c ='" +uneEntreprise.getRue() + "', telephone ='" +uneEntreprise.getTel() + "', mail ='" +uneEntreprise.getMail() + 
 				"', mdp ='" +uneEntreprise.getMdp() + "', raison ='" +uneEntreprise.getRaison() + "', domaine ='" +uneEntreprise.getDomaine() + 
 				"', siret ='" +uneEntreprise.getSiret() + "' where ID_C = " + uneEntreprise.getIdclient() +";";
-		BDD uneBdd = new BDD("localhost", "BTPRent", "root", "");
+		
 		try
 		{
-			uneBdd.seConnecter();
-			Statement unStat = uneBdd.getMaConnexion().createStatement();
+			BDD.seConnecter();
+			Statement unStat = BDD.getMaConnexion().createStatement();
 			unStat.execute(requete);
 			unStat.close();
-			uneBdd.seDeconnecter();
+			BDD.seDeconnecter();
 		}
 		catch (SQLException exp)
 		{
@@ -271,18 +271,18 @@ public class ModeleClients
 	
 	public static void updateParticulier (Particulier unParticulier)
 	{
-		String requete = "update particulier set nom_c ='" + unParticulier.getNom() + "', datenaiss ='" +unParticulier.getDatenaiss() + 
+		String requete = "update PARTICULIER set nom_c ='" + unParticulier.getNom() + "', datenaiss ='" +unParticulier.getDatenaiss() + 
 				"', prenom_c ='" +unParticulier.getPrenom() + "', ville_c ='" +unParticulier.getVille() + "', cp_c ='" +unParticulier.getCp() + 
 				"', rue_c ='" +unParticulier.getRue() + "', telephone ='" +unParticulier.getTel() + "', mail ='" +unParticulier.getMail() + 
 				"', mdp ='" +unParticulier.getMdp() + "' where ID_C = " + unParticulier.getIdclient() +";";
-		BDD uneBdd = new BDD("localhost", "BTPRent", "root", "");
+		
 		try
 		{
-			uneBdd.seConnecter();
-			Statement unStat = uneBdd.getMaConnexion().createStatement();
+			BDD.seConnecter();
+			Statement unStat = BDD.getMaConnexion().createStatement();
 			unStat.execute(requete);
 			unStat.close();
-			uneBdd.seDeconnecter();
+			BDD.seDeconnecter();
 		}
 		catch (SQLException exp)
 		{
@@ -293,13 +293,13 @@ public class ModeleClients
 	 //-------------SELECT WHERE--------------------
 	public static Client selectWhere (Client unClient)
 	{
-		String requete = "select * from client where " + "mail = '" + unClient.getNom() + "' and adresse = '" + unClient.getAdresse()+ "' ; ";
+		String requete = "select * from CLIENT where " + "mail = '" + unClient.getNom() + "' and adresse = '" + unClient.getAdresse()+ "' ; ";
 		Client leClient = null ;
-		BDD uneBdd = new BDD("localhost", "BTPRent", "root", "");
+		
 		try
 		{
-			uneBdd.seConnecter();
-			Statement unStat = uneBdd.getMaConnexion().createStatement();
+			BDD.seConnecter();
+			Statement unStat = BDD.getMaConnexion().createStatement();
 			ResultSet unRes = unStat.executeQuery(requete);
 			if(unRes.next())
 			{
@@ -307,7 +307,7 @@ public class ModeleClients
 				leClient = new Client(idclient, unClient.getNom(), unClient.getAdresse());
 			}			
 			unStat.close();
-			uneBdd.seDeconnecter();;
+			BDD.seDeconnecter();;
 			unRes.close();
 		}
 		catch (SQLException exp)
@@ -320,13 +320,13 @@ public class ModeleClients
 	
 	public static Particulier selectWhereP (Particulier unParticulier)
 	{
-		String requete = "select * from particulier where " + "nom_c = '" + unParticulier.getNom() + "' and prenom_c = '" + unParticulier.getPrenom()+ "' and mail = '" + unParticulier.getMail()+ "' ; ";
+		String requete = "select * from PARTICULIER where " + "nom_c = '" + unParticulier.getNom() + "' and prenom_c = '" + unParticulier.getPrenom()+ "' and mail = '" + unParticulier.getMail()+ "' ; ";
 		Particulier leParticulier = null ;
-		BDD uneBdd = new BDD("localhost", "BTPRent", "root", "");
+		
 		try
 		{
-			uneBdd.seConnecter();
-			Statement unStat = uneBdd.getMaConnexion().createStatement();
+			BDD.seConnecter();
+			Statement unStat = BDD.getMaConnexion().createStatement();
 			ResultSet unRes = unStat.executeQuery(requete);
 			if(unRes.next())
 			{
@@ -336,7 +336,7 @@ public class ModeleClients
 						unParticulier.getMdp());
 			}			
 			unStat.close();
-			uneBdd.seDeconnecter();;
+			BDD.seDeconnecter();;
 			unRes.close();
 		}
 		catch (SQLException exp)
@@ -349,13 +349,13 @@ public class ModeleClients
 	
 	public static Entreprise selectWhereE (Entreprise uneEntreprise)
 	{
-		String requete = "select * from entreprise where " + "nom_c = '" + uneEntreprise.getNom() + "' and prenom_c = '" + uneEntreprise.getPrenom()+ "' and mail = '" + uneEntreprise.getMail()+ "' ; ";
+		String requete = "select * from ENTREPRISE where " + "nom_c = '" + uneEntreprise.getNom() + "' and prenom_c = '" + uneEntreprise.getPrenom()+ "' and mail = '" + uneEntreprise.getMail()+ "' ; ";
 		Entreprise lEntreprise = null ;
-		BDD uneBdd = new BDD("localhost", "BTPRent", "root", "");
+		
 		try
 		{
-			uneBdd.seConnecter();
-			Statement unStat = uneBdd.getMaConnexion().createStatement();
+			BDD.seConnecter();
+			Statement unStat = BDD.getMaConnexion().createStatement();
 			ResultSet unRes = unStat.executeQuery(requete);
 			if(unRes.next())
 			{
@@ -364,7 +364,7 @@ public class ModeleClients
 						uneEntreprise.getTel(), uneEntreprise.getMail(), uneEntreprise.getMdp(), uneEntreprise.getRaison(), uneEntreprise.getDomaine(), uneEntreprise.getSiret());
 			}			
 			unStat.close();
-			uneBdd.seDeconnecter();;
+			BDD.seDeconnecter();;
 			unRes.close();
 		}
 		catch (SQLException exp)

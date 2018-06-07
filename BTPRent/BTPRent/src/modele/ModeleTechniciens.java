@@ -11,17 +11,17 @@ public class ModeleTechniciens
 {
 	public static void insertTechnicien (Technicien unTechnicien) 
 	{
-		String requete = "insert into technicien (IDT, NOMT, PRENOMT, mail, mdp) values (null, '" + unTechnicien.getNom()+"' , '" + unTechnicien.getPrenom()+"' ,"
+		String requete = "insert into TECHNICIEN (IDT, NOMT, PRENOMT, mail, mdp) values (null, '" + unTechnicien.getNom()+"' , '" + unTechnicien.getPrenom()+"' ,"
 				+ " '" + unTechnicien.getMail()+"' , '" + unTechnicien.getMdp()+"');";
 		
-		BDD uneBdd = new BDD("localhost", "BTPRent", "root", "");
+		
 		try
 		{
-			uneBdd.seConnecter();
-			Statement unStat = uneBdd.getMaConnexion().createStatement();
+			BDD.seConnecter();
+			Statement unStat = BDD.getMaConnexion().createStatement();
 			unStat.execute(requete);
 			unStat.close();
-			uneBdd.seDeconnecter();
+			BDD.seDeconnecter();
 		}
 		catch (SQLException exp)
 		{
@@ -32,13 +32,13 @@ public class ModeleTechniciens
 	public static ArrayList<Technicien> selectAllTechnicien ()
 	{
 		ArrayList<Technicien> lesTechniciens = new ArrayList<Technicien>();
-		String requete = "select IDT, NOMT, PRENOMT, MAIL, mdp from technicien ;";
+		String requete = "select IDT, NOMT, PRENOMT, MAIL, mdp from TECHNICIEN ;";
 	
-		BDD uneBdd = new BDD("localhost", "BTPRent", "root", "");
+		
 		try
 		{
-			uneBdd.seConnecter();
-			Statement unStat = uneBdd.getMaConnexion().createStatement();
+			BDD.seConnecter();
+			Statement unStat = BDD.getMaConnexion().createStatement();
 			ResultSet unRes = unStat.executeQuery(requete);		
 			
 			while (unRes.next()) // tant qu'il y a un resultat
@@ -47,13 +47,13 @@ public class ModeleTechniciens
 				String nom = unRes.getString("NOMT");
 				String prenom = unRes.getString("PRENOMT");
 				String mail = unRes.getString("MAIL");
-				String mdp = unRes.getString("mdp");
+				String mdp = unRes.getString("MDP");
 				Technicien unTechnicien = new Technicien(idtechnicien, nom, prenom, mail, mdp); 
 				lesTechniciens.add(unTechnicien); 
 			}
 			unStat.close();
 			unRes.close();
-			uneBdd.seDeconnecter();
+			BDD.seDeconnecter();
 		}		
 		catch (SQLException exp)
 		{
@@ -64,15 +64,15 @@ public class ModeleTechniciens
 	
 	public static void deleteTechnicien (Technicien unTechnicien)
 	{
-		String requete = "delete from technicien where IDT =" +unTechnicien.getIdTechnicien() +";";
-		BDD uneBdd = new BDD("localhost", "BTPRent", "root", "");
+		String requete = "delete from TECHNICIEN where IDT =" +unTechnicien.getIdTechnicien() +";";
+		
 		try
 		{
-			uneBdd.seConnecter();
-			Statement unStat = uneBdd.getMaConnexion().createStatement();
+			BDD.seConnecter();
+			Statement unStat = BDD.getMaConnexion().createStatement();
 			unStat.execute(requete);
 			unStat.close();
-			uneBdd.seDeconnecter();
+			BDD.seDeconnecter();
 		}
 		catch (SQLException exp)
 		{
@@ -82,16 +82,16 @@ public class ModeleTechniciens
 	
 	public static void updateTechnicien (Technicien unTechnicien)
 	{
-		String requete = "update technicien set nomt ='" + unTechnicien.getNom() + "',prenomt='" +unTechnicien.getPrenom() + "',mail='" +unTechnicien.getMail() + 
+		String requete = "update TECHNICIEN set nomt ='" + unTechnicien.getNom() + "',prenomt='" +unTechnicien.getPrenom() + "',mail='" +unTechnicien.getMail() + 
 				"',mdp='" +unTechnicien.getMdp() + "' WHERE IDT = " + unTechnicien.getIdTechnicien() +";";
-		BDD uneBdd = new BDD("localhost", "BTPRent", "root", "");
+		
 		try
 		{
-			uneBdd.seConnecter();
-			Statement unStat = uneBdd.getMaConnexion().createStatement();
+			BDD.seConnecter();
+			Statement unStat = BDD.getMaConnexion().createStatement();
 			unStat.execute(requete);
 			unStat.close();
-			uneBdd.seDeconnecter();
+			BDD.seDeconnecter();
 		}
 		catch (SQLException exp)
 		{
@@ -101,13 +101,13 @@ public class ModeleTechniciens
 	
 	public static Technicien selectWhere (Technicien unTechnicien)
 	{
-		String requete = "select * from technicien where " + "nomt = '" + unTechnicien.getNom() + "' and prenomt = '" + unTechnicien.getPrenom()+ "' ; ";
+		String requete = "select * from TECHNICIEN where " + "nomt = '" + unTechnicien.getNom() + "' and prenomt = '" + unTechnicien.getPrenom()+ "' ; ";
 		Technicien leTechnicien = null ;
-		BDD uneBdd = new BDD("localhost", "BTPRent", "root", "");
+		
 		try
 		{
-			uneBdd.seConnecter();
-			Statement unStat = uneBdd.getMaConnexion().createStatement();
+			BDD.seConnecter();
+			Statement unStat = BDD.getMaConnexion().createStatement();
 			ResultSet unRes = unStat.executeQuery(requete);
 			if(unRes.next())
 			{
@@ -115,7 +115,7 @@ public class ModeleTechniciens
 				leTechnicien = new Technicien(idtechnicien, unTechnicien.getNom(), unTechnicien.getPrenom(), unTechnicien.getMail(), unTechnicien.getMdp());
 			}			
 			unStat.close();
-			uneBdd.seDeconnecter();;
+			BDD.seDeconnecter();;
 			unRes.close();
 		}
 		catch (SQLException exp)
