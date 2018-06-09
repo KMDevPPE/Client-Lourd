@@ -5,10 +5,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import controleur.Client;
-import controleur.Particulier;
-import controleur.Entreprise;
-import controleur.Etat;
+
+//import controleur.Etat;
 import controleur.Salarie;
 
 public class Modele 
@@ -271,7 +269,7 @@ public class Modele
 		return leSalarie;
 	}
 	
-	//----------------------------------------USELESS MAIS PAS SUPPR-------------------------------------
+	/*----------------------------------------USELESS MAIS PAS SUPPR-------------------------------------
 	public static ArrayList<Etat> selectEtat ()  //vue etat
 	{
 		ArrayList<Etat> lesEtats = new ArrayList<Etat>();
@@ -302,6 +300,6 @@ public class Modele
 			System.out.println("Erreur : " + requete);
 		}
 		return lesEtats;
-	}
+	} */
 	
 }

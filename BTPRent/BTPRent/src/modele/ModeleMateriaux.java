@@ -5,7 +5,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import controleur.Etat;
 import controleur.Materiel;
 
 public class ModeleMateriaux extends Modele

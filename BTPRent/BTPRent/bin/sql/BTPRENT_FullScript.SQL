@@ -185,20 +185,9 @@ CREATE TABLE IF NOT EXISTS INTERVENIR
  )
  comment = "";
 
-# -----------------------------------------------------------------------------
-#       TABLE : AFFILIER
-# -----------------------------------------------------------------------------
-
-CREATE TABLE IF NOT EXISTS AFFILIER
- (
-   IDT CHAR(32) NOT NULL  ,
-   ID_CONT INTEGER(2) NOT NULL
-   , PRIMARY KEY (IDT,ID_CONT)
- )
- comment = "";
 
  # -----------------------------------------------------------------------------
- #       TABLE : AFFILIER
+ #       TABLE : ENQUETE
  # -----------------------------------------------------------------------------
 
 CREATE TABLE IF NOT EXISTS ENQUETE
@@ -265,18 +254,8 @@ ALTER TABLE INTERVENIR
       REFERENCES MATERIEL (ID_M) ;
 
 
-ALTER TABLE AFFILIER
-  ADD FOREIGN KEY FK_AFFILIER_TECHNICIEN (IDT)
-      REFERENCES TECHNICIEN (IDT) ;
 
 
-ALTER TABLE AFFILIER
-  ADD FOREIGN KEY FK_AFFILIER_CONTRAT (ID_CONT)
-      REFERENCES CONTRAT (ID_CONT) ;
-	  
-	  
-	  
-	  --INSERT ESSENTIELS A LA BDD POUR LE FONCTIONNEMENT DES APPS
 insert into etat
 values
 	(1,'neuf'),
@@ -284,7 +263,7 @@ values
 	(3,'bon etat'),
 	(4,'mauvais etat'),
 	(5,'defectueux');
-	
+
 insert into type_materiel
 values
 	(1,'Gros Oeuvre'),
@@ -295,7 +274,7 @@ values
 	(6,'Elevation'),
 	(7,'Manutention'),
 	(8,'Plomberie');
-	
+
 insert into localisation
 values
 	(1,'Paris','75017','rue de Paris'),
@@ -306,17 +285,17 @@ values
 insert into salarie(ID_S, nom_s, prenom_s, rue_s, cp_s, ville_s, mail, mdp, droits)
 values
 	(null, 'MOUALEM', 'Yannis', 'Rue de Senlis', '95260', 'Beaumont', 'admin','123', 'admin');
-	
-	
-	--TRIGGERS GERANT L'HERITAGE ENTRE CLIENT et les tables ENTREPRISE et PARTICULIER
+
+
+	/* TRIGGERS GERANT L'HERITAGE ENTRE CLIENT et les tables ENTREPRISE et PARTICULIER */
 drop trigger if exists hPart;
 delimiter //
 create trigger hPart
-    before insert on Particulier
+    before insert on PARTICULIER
     for each row
     begin
     declare nb int (2) ;
-    select Max(id_C) into nb from Client;
+    select Max(id_C) into nb from CLIENT;
 
     if nb is null
         then
@@ -326,7 +305,7 @@ create trigger hPart
     end if ;
             set new.id_C = nb ;
 
-            insert into client
+            insert into CLIENT
             values (new.id_C, new.nom_C, new.prenom_C, new.ville_C, new.cp_C, new.rue_C, new.telephone,new.mail, new.mdp);
 
     end //
@@ -335,11 +314,11 @@ delimiter ;
 drop trigger if exists hEntr;
 delimiter //
 create trigger hEntr
-    before insert on Entreprise
+    before insert on ENTREPRISE
     for each row
     begin
     declare nb int (2) ;
-    select Max(id_C) into nb from Client;
+    select Max(id_C) into nb from CLIENT;
 
     if nb is null
         then
@@ -349,7 +328,7 @@ create trigger hEntr
     end if ;
             set new.id_C = nb ;
 
-            insert into client
+            insert into CLIENT
             values (new.id_C, new.nom_C, new.prenom_C, new.ville_C, new.cp_C, new.rue_C, new.telephone,new.mail, new.mdp);
 
     end //
@@ -358,10 +337,10 @@ delimiter ;
 drop trigger if exists upPart;
 delimiter //
 create trigger upPart
-    before update on Particulier
+    before update on PARTICULIER
     for each row
     begin
-        update client
+        update CLIENT
         set nom_C = new.nom_C ,
             prenom_C = new.prenom_C ,
             ville_C = new.ville_C,
@@ -377,10 +356,10 @@ delimiter ;
 drop trigger if exists upEntr;
 delimiter //
 create trigger upEntr
-    before update on Entreprise
+    before update on ENTREPRISE
     for each row
     begin
-        update client
+        update CLIENT
         set nom_C = new.nom_C ,
             prenom_C = new.prenom_C ,
             ville_C = new.ville_C,
@@ -407,10 +386,10 @@ delimiter ;
 drop trigger if exists delEntr;
 delimiter //
 create trigger delEntr
-    after delete on Entreprise
+    after delete on ENTREPRISE
     for each row
     begin
-        delete from Client
+        delete from CLIENT
         where id_C = old.id_C;
     end //
 delimiter ;
@@ -427,7 +406,7 @@ create trigger insCont
 delimiter ;
 
 
-	--PROCEDURE PERMETTANT L'INSERTION D'UN MATERIEL AVEC UN ETAT, UN TYPE ET UNE LOCALISATION APPELLEE DANS LE CLIENT LOURD GESTIONBTPRent
+/*PROCEDURE PERMETTANT L'INSERTION D'UN MATERIEL AVEC UN ETAT, UN TYPE ET UNE LOCALISATION APPELLEE DANS LE CLIENT LOURD GESTIONBTPRent */
 drop procedure if exists PInsMat;
 delimiter //
 create procedure PInsMat (nomM char(32), prix float(10,2), ville varchar(128), codeP char(5), larue varchar (128), imageM varchar (100), stockM int (2), nomType char(32), etat char(32))
@@ -435,14 +414,14 @@ create procedure PInsMat (nomM char(32), prix float(10,2), ville varchar(128), c
 	begin
 		declare nbL, nbE, nbT, idl, ide, idt int;
 
-		select count(*) into nbL from localisation where lieux = ville and cp = codeP and rue_c = larue;
+		select count(*) into nbL from LOCALISATION where lieux = ville and cp = codeP and rue_c = larue;
 
-		select count(*) into nbE from etat where nom_etat = etat;
+		select count(*) into nbE from ETAT where nom_etat = etat;
 
-		select count(*) into nbT from type_materiel where libelle = nomType;
+		select count(*) into nbT from TYPE_MATERIEL where libelle = nomType;
 
 		if nbE < 0 then
-			select 'erreur de saisie de l\'etat ';
+			select 'erreur de saisie de l etat ';
 		end if;
 
 		if nbT < 0 then
@@ -452,29 +431,43 @@ create procedure PInsMat (nomM char(32), prix float(10,2), ville varchar(128), c
 		if nbL < 1 then
 			insert into localisation values (null,ville,codeP,larue);
 
-			select id_etat into ide from etat where nom_etat= etat;
+			select id_etat into ide from ETAT where nom_etat= etat;
 
-			select id_type into idt from type_materiel where libelle = nomType;
+			select id_type into idt from TYPE_MATERIEL where libelle = nomType;
 
-			select id_localisation into idl from localisation where lieux = ville and cp = codeP and rue_c = larue;
+			select id_localisation into idl from LOCALISATION where lieux = ville and cp = codeP and rue_c = larue;
 
-			insert into materiel values (null,idl,idt,ide,nomM,prix,imageM,stockM);
+			insert into MATERIEL values (null,idl,idt,ide,nomM,prix,imageM,stockM);
 
 		else
 
-		select id_etat into ide from etat where nom_etat= etat;
+		select id_etat into ide from ETAT where nom_etat= etat;
 
-		select id_type into idt from type_materiel where libelle = nomType;
+		select id_type into idt from TYPE_MATERIEL where libelle = nomType;
 
-		select id_localisation into idl from localisation where lieux = ville and cp = codeP and rue_c = larue;
+		select id_localisation into idl from LOCALISATION where lieux = ville and cp = codeP and rue_c = larue;
 
-		insert into materiel values (null,idl,idt,ide,nomM,prix,imageM,stockM);
+		insert into MATERIEL values (null,idl,idt,ide,nomM,prix,imageM,stockM);
 
 	end if;
-		insert into materiel values (null,idl,idt,ide,nomM,prix,img,stock);
+		insert into MATERIEL values (null,idl,idt,ide,nomM,prix,img,stock);
 
 	end //
 delimiter ;
 
 
--- call PInsMat ('manitou','20.90','Beaumont','95260','rue de senlis','/images/manitou.jpg',10,'manutention','bon etat');
+
+/* call PInsMat ('manitou','20.90','Beaumont','95260','rue de senlis','/images/manitou.jpg',10,'manutention','bon etat'); */
+
+drop procedure if exists pInsCont ;
+delimiter //
+create procedure pInsCont ( mailC varchar(128), nomM char(32),  prix decimal(10,2), qtt int(2))
+	begin
+	 	declare idc, idm int(2);
+
+		select ID_M into idm from MATERIEL where NOM_M = nomM and PRIX_M = prix;
+		select ID_C into idc from CLIENT where MAIL = mailC;
+
+		insert into CONTRAT values (null,idm,null,idc,qtt,now(),null);
+	end //
+delimiter ;
