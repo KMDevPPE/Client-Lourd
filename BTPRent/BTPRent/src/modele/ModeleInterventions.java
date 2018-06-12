@@ -133,8 +133,8 @@ public class ModeleInterventions
 	{
 		
 		String requete = "SELECT  ID_I, t.NOMT, m.NOM_M, i.Date_debut, i.date_fin FROM INTERVENIR I" + 
-				" LEFT JOIN TECHNICIEN t ON t.IDT = i.IDT LEFT JOIN MATERIEL m ON m.ID_M = i.ID_M where t.NOMT = '"+uneIntervention.getNomTechnicien()+"' AND m.NOM_M = '"+uneIntervention.getNomMateriel()+"' ;" ;
-		
+				" LEFT JOIN TECHNICIEN t ON t.IDT = i.IDT LEFT JOIN MATERIEL m ON m.ID_M = i.ID_M where t.NOMT = '"+uneIntervention.getNomTechnicien()+"' AND m.ID_M = '"+uneIntervention.getNomMateriel()+"' ;" ;
+		System.out.println(requete);
 		Intervention lIntervention = null ;
 		try
 		{
@@ -144,7 +144,7 @@ public class ModeleInterventions
 			if(unRes.next())
 			{
 				int idIntervention = unRes.getInt("ID_I");
-				lIntervention = new Intervention(idIntervention, 0, uneIntervention.getNomTechnicien(), uneIntervention.getNomMateriel(), uneIntervention.getDateDebut(), uneIntervention.getDateFin());
+				lIntervention = new Intervention(idIntervention, 0, uneIntervention.getNomTechnicien(), unRes.getString("NOM_M"), uneIntervention.getDateDebut(), uneIntervention.getDateFin());
 				System.out.println(lIntervention.getNomMateriel());
 			}			
 			unStat.close();
